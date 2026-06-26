@@ -1,3 +1,198 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Brand Colors */
+  --primary: 24 60% 30%;
+  --primary-light: 36 80% 88%;
+  --primary-dark: 20 70% 15%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 28 50% 40%;
+  --secondary-light: 28 50% 90%;
+  --secondary-dark: 28 50% 30%;
+  --secondary-foreground: 0 0% 100%;
+
+  --accent: 120 15% 45%;
+  --accent-light: 120 15% 90%;
+  --accent-dark: 120 15% 35%;
+  --accent-foreground: 0 0% 100%;
+
+  /* Background Colors */
+  --background: 30 45% 93%;
+  --background-secondary: 0 0% 98%;
+  --background-tertiary: 28 50% 95%;
+
+  /* Surface Colors */
+  --surface: 0 0% 100%;
+  --surface-elevated: 0 0% 100%;
+  --surface-sunken: 0 0% 96%;
+
+  /* Card Colors */
+  --card: 0 0% 100%;
+  --card-foreground: 20 10% 10%;
+  --card-border: 24 10% 90%;
+
+  /* Border Colors */
+  --border: 24 10% 90%;
+  --border-light: 24 10% 95%;
+  --border-dark: 24 10% 85%;
+  --border-focus: 28 60% 40%;
+
+  /* Text Colors */
+  --text-primary: 20 10% 10%;
+  --text-secondary: 24 10% 45%;
+  --text-tertiary: 24 10% 55%;
+  --text-inverse: 0 0% 100%;
+  --text-disabled: 24 10% 70%;
+  --text-link: 28 60% 35%;
+
+  /* Foreground */
+  --foreground: 20 10% 10%;
+
+  /* Muted */
+  --muted: 0 0% 96%;
+  --muted-foreground: 24 10% 55%;
+
+  /* Input Colors */
+  --input: 0 0% 100%;
+  --input-border: 24 10% 80%;
+  --input-border-focus: 28 60% 40%;
+  --input-border-error: 10 70% 55%;
+  --input-border-success: 120 30% 45%;
+  --input-placeholder: 24 10% 70%;
+
+  /* Tab Bar */
+  --tab-bar: 0 0% 100%;
+  --tab-bar-border: 24 10% 90%;
+  --tab-bar-active: 24 60% 30%;
+  --tab-bar-inactive: 24 10% 70%;
+
+  /* Semantic Colors */
+  --destructive: 10 70% 55%;
+  --destructive-foreground: 0 0% 100%;
+
+  --success: 120 30% 45%;
+  --success-light: 120 30% 90%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 36 60% 50%;
+  --warning-light: 36 60% 90%;
+  --warning-foreground: 20 10% 10%;
+
+  --error: 10 70% 55%;
+  --error-light: 10 70% 90%;
+  --error-foreground: 0 0% 100%;
+
+  --info: 28 60% 45%;
+  --info-light: 28 60% 90%;
+  --info-foreground: 0 0% 100%;
+
+  /* Overlay */
+  --overlay: 0 0% 0% / 0.5;
+  --overlay-light: 0 0% 0% / 0.25;
+  --overlay-dark: 0 0% 0% / 0.75;
+}
+
+.dark {
+  /* Brand Colors */
+  --primary: 32 60% 55%;
+  --primary-light: 28 60% 20%;
+  --primary-dark: 36 60% 70%;
+  --primary-foreground: 0 0% 5%;
+
+  --secondary: 28 50% 55%;
+  --secondary-light: 28 50% 20%;
+  --secondary-dark: 28 50% 70%;
+  --secondary-foreground: 0 0% 5%;
+
+  --accent: 120 15% 55%;
+  --accent-light: 120 15% 20%;
+  --accent-dark: 120 15% 70%;
+  --accent-foreground: 0 0% 5%;
+
+  /* Background Colors */
+  --background: 20 10% 5%;
+  --background-secondary: 20 10% 8%;
+  --background-tertiary: 20 10% 12%;
+
+  /* Surface Colors */
+  --surface: 20 10% 8%;
+  --surface-elevated: 20 10% 12%;
+  --surface-sunken: 20 10% 4%;
+
+  /* Card Colors */
+  --card: 20 10% 8%;
+  --card-foreground: 0 0% 95%;
+  --card-border: 20 10% 18%;
+
+  /* Border Colors */
+  --border: 20 10% 18%;
+  --border-light: 20 10% 22%;
+  --border-dark: 20 10% 14%;
+  --border-focus: 32 60% 50%;
+
+  /* Text Colors */
+  --text-primary: 0 0% 95%;
+  --text-secondary: 20 10% 60%;
+  --text-tertiary: 20 10% 50%;
+  --text-inverse: 20 10% 10%;
+  --text-disabled: 20 10% 40%;
+  --text-link: 32 60% 65%;
+
+  /* Foreground */
+  --foreground: 0 0% 95%;
+
+  /* Muted */
+  --muted: 20 10% 15%;
+  --muted-foreground: 20 10% 50%;
+
+  /* Input Colors */
+  --input: 20 10% 12%;
+  --input-border: 20 10% 22%;
+  --input-border-focus: 32 60% 50%;
+  --input-border-error: 10 70% 55%;
+  --input-border-success: 120 30% 50%;
+  --input-placeholder: 20 10% 45%;
+
+  /* Tab Bar */
+  --tab-bar: 20 10% 8%;
+  --tab-bar-border: 20 10% 18%;
+  --tab-bar-active: 32 60% 55%;
+  --tab-bar-inactive: 20 10% 45%;
+
+  /* Semantic Colors */
+  --destructive: 10 70% 55%;
+  --destructive-foreground: 0 0% 100%;
+
+  --success: 120 30% 50%;
+  --success-light: 120 30% 15%;
+  --success-foreground: 0 0% 100%;
+
+  --warning: 36 60% 55%;
+  --warning-light: 36 60% 15%;
+  --warning-foreground: 0 0% 5%;
+
+  --error: 10 70% 55%;
+  --error-light: 10 70% 15%;
+  --error-foreground: 0 0% 100%;
+
+  --info: 32 60% 55%;
+  --info-light: 32 60% 15%;
+  --info-foreground: 0 0% 100%;
+
+  /* Overlay */
+  --overlay: 0 0% 0% / 0.7;
+  --overlay-light: 0 0% 0% / 0.5;
+  --overlay-dark: 0 0% 0% / 0.9;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

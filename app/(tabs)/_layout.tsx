@@ -1,56 +1,50 @@
 import React from "react";
-import { Redirect, Tabs } from "expo-router";
-import { Pressable } from "react-native";
-import { Home, Coffee, ShoppingBag, User } from "lucide-react-native";
-import { useAuthStore, useCartStore } from "@/stores";
-import { Text } from "@/components/ui/Text";
-import { cn } from "@/utils/cn";
+import { Tabs } from "expo-router";
+import {
+  Home,
+  Coffee,
+  Star,
+  MapPin,
+  User,
+} from "lucide-react-native";
+import type { ColorValue } from "react-native";
 
-function TabBarIcon({ name, color, focused }: { name: string; color: string; focused: boolean }) {
+function TabBarIcon({
+  name,
+  color,
+  focused,
+}: {
+  name: string;
+  color: ColorValue;
+  focused: boolean;
+}) {
   const icons: Record<string, React.ReactNode> = {
-    home: <Home size={24} color={color} />,
-    menu: <Coffee size={24} color={color} />,
-    orders: <ShoppingBag size={24} color={color} />,
-    profile: <User size={24} color={color} />,
+    home: <Home size={24} color={color as string} />,
+    menu: <Coffee size={24} color={color as string} />,
+    reviews: <Star size={24} color={color as string} />,
+    "visit-us": <MapPin size={24} color={color as string} />,
+    profile: <User size={24} color={color as string} />,
   };
-
   return <>{icons[name]}</>;
 }
 
-function CartBadge() {
-  const itemCount = useCartStore((s) => s.getItemCount());
-
-  if (itemCount === 0) return null;
-
-  return (
-    <View className="absolute -right-2 -top-2 h-5 w-5 items-center justify-center rounded-full bg-primary-600">
-      <Text className="text-[10px] font-bold text-white">{itemCount}</Text>
-    </View>
-  );
-}
-
 export default function TabLayout() {
-  const { isAuthenticated, isLoading } = useAuthStore();
-
-  if (isLoading) return null;
-
-  if (!isAuthenticated) {
-    return <Redirect href="/(auth)/login" />;
-  }
-
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: "#6b341a",
-        tabBarInactiveTintColor: "#737373",
+        tabBarInactiveTintColor: "#a8a29e",
         tabBarStyle: {
-          borderTopColor: "#e5e5e5",
+          borderTopColor: "#f2e8d9",
           backgroundColor: "#ffffff",
+          paddingTop: 6,
+          height: 88,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: "500",
+          fontSize: 11,
+          fontWeight: "600",
+          marginTop: 2,
         },
       }}
     >
@@ -73,14 +67,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="cart"
+        name="reviews"
         options={{
-          title: "Cart",
+          title: "Reviews",
           tabBarIcon: ({ color, focused }) => (
-            <View>
-              <TabBarIcon name="orders" color={color} focused={focused} />
-              <CartBadge />
-            </View>
+            <TabBarIcon name="reviews" color={color} focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="visit-us"
+        options={{
+          title: "Visit Us",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name="visit-us" color={color} focused={focused} />
           ),
         }}
       />
@@ -91,6 +91,18 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="profile" color={color} focused={focused} />
           ),
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="orders"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

@@ -1,2 +1,2 @@
-// Profile feature hooks and utilities
-// Business logic will be added later
+// Profile feature - UI only
+export {};

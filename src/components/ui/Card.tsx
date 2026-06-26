@@ -1,11 +1,10 @@
 import React from "react";
-import { View, type ViewProps, Pressable, type PressableProps } from "react-native";
+import { View, type ViewProps } from "react-native";
 import { cn } from "@/utils/cn";
 
 interface CardProps extends ViewProps {
   variant?: "default" | "elevated" | "outlined";
   padding?: "none" | "sm" | "md" | "lg";
-  as?: typeof View | typeof Pressable;
 }
 
 const cardVariants = {
@@ -27,7 +26,7 @@ export function Card({
   className,
   children,
   ...props
-}: CardProps & { onPress?: PressableProps["onPress"] }) {
+}: CardProps) {
   return (
     <View
       className={cn(

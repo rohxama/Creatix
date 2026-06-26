@@ -8,7 +8,7 @@ interface ScreenContainerProps extends ScrollViewProps {
   paddingX?: boolean;
   paddingY?: boolean;
   safeArea?: boolean;
-  refreshControl?: React.ReactElement;
+  refreshControl?: React.ReactElement<any>;
   refreshing?: boolean;
   onRefresh?: () => void;
   keyboardShouldPersistTaps?: "never" | "always" | "handled";

@@ -1,26 +1,28 @@
 {
   "expo": {
-    "name": "CafeApp",
-    "slug": "cafe-app",
+    "name": "Creatix Cafe",
+    "slug": "creatix-cafe",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "cafeapp",
+    "scheme": "creatixcafe",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#6B341A"
+    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cafe.app"
+      "bundleIdentifier": "com.creatix.cafe"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "backgroundColor": "#6B341A"
       },
-      "package": "com.cafe.app",
-      "predictiveBackGestureEnabled": false
+      "package": "com.creatix.cafe"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -32,20 +34,7 @@
       "expo-image",
       "expo-font",
       "expo-splash-screen",
-      "expo-asset",
-      [
-        "expo-notifications",
-        {
-          "icon": "./assets/icon.png",
-          "color": "#6B4226"
-        }
-      ],
-      [
-        "react-native-maps",
-        {
-          "locationAlwaysAndWhenInUsePermission": "Allow CafeApp to access your location."
-        }
-      ]
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true

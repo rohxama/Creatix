@@ -5,3 +5,4 @@ export { TextInput } from "./TextInput";
 export { Card } from "./Card";
 export { Chip } from "./Chip";
 export { ScreenContainer } from "./ScreenContainer";
+export { Loader } from "./Loader";
