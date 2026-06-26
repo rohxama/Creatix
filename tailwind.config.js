@@ -1,0 +1,82 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
+  presets: [require("nativewind/preset")],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#fdf8f3',
+          100: '#f9edd9',
+          200: '#f2d7b0',
+          300: '#e9bb7d',
+          400: '#df9748',
+          500: '#d77c26',
+          600: '#c8641c',
+          700: '#a64d19',
+          800: '#853e1c',
+          900: '#6b341a',
+          950: '#3a190b',
+        },
+        accent: {
+          50: '#f0fdf6',
+          100: '#dcfce9',
+          200: '#bbf7d4',
+          300: '#86efb0',
+          400: '#4ade83',
+          500: '#22c55e',
+          600: '#16a34b',
+          700: '#15803d',
+          800: '#166534',
+          900: '#14532d',
+          950: '#052e16',
+        },
+        coffee: {
+          50: '#faf6f1',
+          100: '#f2e8d9',
+          200: '#e5ceb0',
+          300: '#d5ae80',
+          400: '#c89058',
+          500: '#bc7a3f',
+          600: '#a86334',
+          700: '#8c4d2d',
+          800: '#73402a',
+          900: '#5f3626',
+          950: '#351b13',
+        },
+        cream: {
+          50: '#fefcf7',
+          100: '#fdf6e8',
+          200: '#faeccf',
+          300: '#f6ddad',
+          400: '#f0c87f',
+          500: '#eab45c',
+          600: '#dc9a37',
+          700: '#b87c2b',
+          800: '#946329',
+          900: '#785126',
+          950: '#412a12',
+        },
+      },
+      fontFamily: {
+        sans: ['Poppins_400Regular', 'Poppins_500Medium', 'Poppins_600SemiBold', 'Poppins_700Bold'],
+        pacifico: ['Pacifico_400Regular'],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+        '128': '32rem',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+      fontSize: {
+        '2xs': ['0.625rem', { lineHeight: '0.875rem' }],
+      },
+    },
+  },
+  plugins: [],
+};
