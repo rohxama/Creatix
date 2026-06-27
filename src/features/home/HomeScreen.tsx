@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   ScrollView,
   View,
@@ -7,12 +7,30 @@ import {
   TextInput,
   Dimensions,
   Platform,
+  Image,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
 } from "react-native";
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withTiming,
+  Easing,
+} from "react-native-reanimated";
 import { useRouter } from "expo-router";
-import { Search, User, ChevronRight } from "lucide-react-native";
+import { Search, User, Star, Plus, SlidersHorizontal } from "lucide-react-native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const PADDING = 20;
+const BANNER_WIDTH = SCREEN_WIDTH - PADDING * 2;
+const BANNER_IMAGES = [
+  require("../../../assets/banner-img1.png"),
+  require("../../../assets/banner-img2.png"),
+  require("../../../assets/banner-img3.png"),
+  require("../../../assets/banner-img4.png"),
+];
+const LOOPED_BANNERS = [...BANNER_IMAGES, BANNER_IMAGES[0]];
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -35,11 +53,16 @@ const COLORS = {
   border: "#ddd0c0",
 };
 
+const whatsNewItems = [
+  { id: "1", name: "Cappuccino" },
+  { id: "2", name: "Iced Coffee" },
+  { id: "3", name: "Mocha" },
+];
+
 const popularItems = [
-  { id: "1", name: "Latte Macchiato", price: "$4.50", emoji: "☕" },
-  { id: "2", name: "Espresso", price: "$3.50", emoji: "🫗" },
-  { id: "3", name: "Caramel Macchiato", price: "$5.00", emoji: "🧋" },
-  { id: "4", name: "Hazelnut Latte", price: "$5.50", emoji: "☕" },
+  { id: "1", name: "Cafe Latte", rating: 4.8, price: "$4.50" },
+  { id: "2", name: "Iced Caramel Latte", rating: 4.9, price: "$5.20" },
+  { id: "3", name: "Cappuccino", rating: 4.7, price: "$4.90" },
 ];
 
 function getGreeting(): string {
@@ -52,6 +75,50 @@ function getGreeting(): string {
 export function HomeScreen() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
+  const bannerRef = useRef<ScrollView>(null);
+  const [bannerIndex, setBannerIndex] = useState(0);
+  const float = useSharedValue(0);
+
+  useEffect(() => {
+    float.value = withRepeat(
+      withTiming(8, {
+        duration: 2000,
+        easing: Easing.inOut(Easing.ease),
+      }),
+      -1,
+      true
+    );
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setBannerIndex((prev) => {
+        const next = prev + 1;
+        if (next >= LOOPED_BANNERS.length) {
+          bannerRef.current?.scrollTo({ x: 0, animated: false });
+          return 0;
+        }
+        bannerRef.current?.scrollTo({ x: next * BANNER_WIDTH, animated: true });
+        return next;
+      });
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [BANNER_WIDTH]);
+
+  const onBannerScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offset = e.nativeEvent.contentOffset.x;
+    const index = Math.round(offset / BANNER_WIDTH);
+    if (index >= BANNER_IMAGES.length) {
+      bannerRef.current?.scrollTo({ x: 0, animated: false });
+      setBannerIndex(0);
+    } else {
+      setBannerIndex(index);
+    }
+  };
+
+  const floatStyle = useAnimatedStyle(() => ({
+    transform: [{ translateY: float.value }],
+  }));
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
@@ -59,7 +126,7 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
-        {/* ─── 1. HEADER (centered cafe name) ─── */}
+        {/* ─── 1. HEADER ─── */}
         <View
           style={{
             alignItems: "center",
@@ -75,11 +142,11 @@ export function HomeScreen() {
               letterSpacing: -0.3,
             }}
           >
-            Creatix Cafe
+            Creatix
           </Text>
         </View>
 
-        {/* ─── 2. GREETING (with user icon) ─── */}
+        {/* ─── 2. GREETING ─── */}
         <View
           style={{
             flexDirection: "row",
@@ -92,7 +159,7 @@ export function HomeScreen() {
         >
           <Text
             style={{
-              fontSize: 24,
+              fontSize: 22,
               fontFamily: "BricolageGrotesque_700Bold",
               color: COLORS.brown,
               letterSpacing: -0.3,
@@ -103,9 +170,9 @@ export function HomeScreen() {
           <Pressable
             onPress={() => router.push("/(tabs)/profile")}
             style={{
-              width: 42,
-              height: 42,
-              borderRadius: 21,
+              width: 40,
+              height: 40,
+              borderRadius: 20,
               backgroundColor: COLORS.coffeeBg,
               alignItems: "center",
               justifyContent: "center",
@@ -119,23 +186,23 @@ export function HomeScreen() {
         <View
           style={{
             paddingHorizontal: PADDING,
-            marginBottom: 24,
+            marginBottom: 20,
           }}
         >
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              backgroundColor: "transparent",
-              borderRadius: 50,
+              backgroundColor: COLORS.warmWhite,
+              borderRadius: 14,
               paddingHorizontal: 14,
-              paddingVertical: Platform.OS === "ios" ? 14 : 12,
-              borderWidth: 2.5,
-              borderColor: COLORS.brown,
+              paddingVertical: Platform.OS === "ios" ? 12 : 10,
+              borderWidth: 1,
+              borderColor: COLORS.border,
               gap: 10,
             }}
           >
-            <Search size={18} color={COLORS.brown} />
+            <Search size={18} color={COLORS.neutralLight} />
             <TextInput
               value={searchText}
               onChangeText={setSearchText}
@@ -148,319 +215,214 @@ export function HomeScreen() {
                 padding: 0,
               }}
             />
+            <SlidersHorizontal size={18} color={COLORS.brown} />
           </View>
         </View>
 
-        {/* ─── 4. HERO BANNER ─── */}
-        <View
-          style={{
-            marginHorizontal: PADDING,
-            marginBottom: 24,
-            borderRadius: 20,
-            backgroundColor: COLORS.sageDark,
-            height: 180,
-            overflow: "hidden",
-          }}
-        >
-          {/* Decorative background circles */}
-          <View
-            style={{
-              position: "absolute",
-              top: -30,
-              right: -20,
-              width: 120,
-              height: 120,
-              borderRadius: 60,
-              backgroundColor: "rgba(90,125,90,0.4)",
-            }}
-          />
-          <View
-            style={{
-              position: "absolute",
-              bottom: -20,
-              right: 60,
-              width: 80,
-              height: 80,
-              borderRadius: 40,
-              backgroundColor: "rgba(90,125,90,0.25)",
-            }}
-          />
-          {/* Coffee bean decorations */}
-          <View
-            style={{
-              position: "absolute",
-              top: 20,
-              right: 50,
-              width: 30,
-              height: 30,
-              borderRadius: 15,
-              backgroundColor: "rgba(188,122,63,0.3)",
-            }}
-          />
-          <View
-            style={{
-              position: "absolute",
-              bottom: 30,
-              right: 20,
-              width: 20,
-              height: 20,
-              borderRadius: 10,
-              backgroundColor: "rgba(188,122,63,0.2)",
-            }}
-          />
-
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              padding: 24,
-              alignItems: "center",
-            }}
+        {/* ─── 4. BANNER SLIDER ─── */}
+        <View style={{ marginBottom: 24, marginHorizontal: PADDING, overflow: "hidden" }}>
+          <ScrollView
+            ref={bannerRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={onBannerScroll}
+            scrollEventThrottle={16}
           >
-            <View style={{ flex: 1 }}>
-              <Text
+            {LOOPED_BANNERS.map((img, idx) => (
+              <View
+                key={idx}
                 style={{
-                  fontSize: 20,
-                  fontWeight: "800",
-                  color: COLORS.white,
-                  lineHeight: 28,
-                  marginBottom: 8,
-                  letterSpacing: -0.3,
+                  width: BANNER_WIDTH,
+                  height: 160,
+                  borderRadius: 18,
+                  overflow: "hidden",
                 }}
               >
-                Enjoy Your{"\n"}Favorite Coffee{"\n"}Every Morning!
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: "rgba(255,255,255,0.6)",
-                  marginBottom: 16,
-                  lineHeight: 17,
-                }}
-              >
-                20% OFF on your first order
-              </Text>
-              <Pressable
-                onPress={() => router.push("/(tabs)/menu")}
-                style={{
-                  backgroundColor: COLORS.caramelLight,
-                  paddingHorizontal: 20,
-                  paddingVertical: 10,
-                  borderRadius: 12,
-                  alignSelf: "flex-start",
-                }}
-              >
-                <Text
+                <Image
+                  source={img}
                   style={{
-                    fontSize: 13,
-                    fontWeight: "700",
-                    color: COLORS.brown,
+                    width: BANNER_WIDTH,
+                    height: 180,
                   }}
-                >
-                  Order Now
-                </Text>
-              </Pressable>
-            </View>
-
-            {/* Coffee cup illustration area */}
-            <View
-              style={{
-                width: 110,
-                height: 140,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text style={{ fontSize: 80 }}>☕</Text>
-            </View>
-          </View>
+                  resizeMode="stretch"
+                />
+              </View>
+            ))}
+          </ScrollView>
         </View>
 
         {/* ─── 5. POPULAR NOW ─── */}
-        <View style={{ marginBottom: 28 }}>
-          <View
+        <View style={{ marginBottom: 24 }}>
+          <Text
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              paddingHorizontal: PADDING,
-              marginBottom: 16,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
+              fontSize: 16,
               fontFamily: "BricolageGrotesque_700Bold",
               color: COLORS.brown,
-              letterSpacing: -0.2,
+              paddingHorizontal: PADDING,
+              marginBottom: 12,
             }}
           >
             Popular Now
-            </Text>
-          </View>
+          </Text>
 
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{
               paddingHorizontal: PADDING,
-              gap: 16,
+              gap: 12,
             }}
           >
             {popularItems.map((item) => (
-              <Pressable
+              <View
                 key={item.id}
-                onPress={() =>
-                  router.push({
-                    pathname: "/(stack)/product-details",
-                    params: { id: item.id },
-                  })
-                }
                 style={{
-                  width: 100,
-                  alignItems: "center",
-                  gap: 10,
+                  width: 140,
+                  backgroundColor: COLORS.warmWhite,
+                  borderRadius: 18,
+                  borderWidth: 1,
+                  borderColor: COLORS.border,
+                  overflow: "hidden",
                 }}
               >
                 <View
                   style={{
-                    width: 80,
-                    height: 80,
-                    borderRadius: 40,
+                    width: "100%",
+                    height: 100,
                     backgroundColor: COLORS.coffeeBg,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Text style={{ fontSize: 36 }}>{item.emoji}</Text>
+                  <Image
+                    source={require("../../../assets/mockup.png")}
+                    style={{ width:80, height: 80 }}
+                    resizeMode="contain"
+                  />
                 </View>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    fontWeight: "600",
-                    color: COLORS.brown,
-                    textAlign: "center",
-                    lineHeight: 17,
-                  }}
-                >
-                  {item.name}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "800",
-                    color: COLORS.caramel,
-                  }}
-                >
-                  {item.price}
-                </Text>
-              </Pressable>
+                <View style={{ padding: 10 }}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: "BricolageGrotesque_700Bold",
+                      color: COLORS.brown,
+                      marginBottom: 4,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 3, marginBottom: 8 }}>
+                    <Star size={11} color="#F5A623" fill="#F5A623" />
+                    <Text
+                      style={{
+                        fontSize: 11,
+                        fontWeight: "600",
+                        color: COLORS.neutral,
+                      }}
+                    >
+                      {item.rating}
+                    </Text>
+                  </View>
+                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        fontWeight: "800",
+                        color: COLORS.brown,
+                      }}
+                    >
+                      {item.price}
+                    </Text>
+                    <Pressable
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 14,
+                        backgroundColor: COLORS.brown,
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Plus size={14} color={COLORS.white} />
+                    </Pressable>
+                  </View>
+                </View>
+              </View>
             ))}
           </ScrollView>
         </View>
 
-        {/* ─── 6. TODAY'S SPECIAL ─── */}
+        {/* ─── 7. BOTTOM PROMO ─── */}
         <View style={{ paddingHorizontal: PADDING }}>
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
               alignItems: "center",
-              marginBottom: 16,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-              fontFamily: "BricolageGrotesque_700Bold",
-              color: COLORS.brown,
-              letterSpacing: -0.2,
-            }}
-          >
-            Today's Special
-            </Text>
-            <Pressable
-              onPress={() => router.push("/(tabs)/menu")}
-              style={{ flexDirection: "row", alignItems: "center", gap: 2 }}
-            >
-              <Text
-                style={{
-                  fontSize: 13,
-                  fontWeight: "600",
-                  color: COLORS.caramel,
-                }}
-              >
-                See All
-              </Text>
-              <ChevronRight size={16} color={COLORS.caramel} />
-            </Pressable>
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLORS.white,
+              backgroundColor: COLORS.warmWhite,
               borderRadius: 18,
+              borderWidth: 1,
+              borderColor: COLORS.border,
               padding: 14,
               gap: 14,
             }}
           >
             <View
               style={{
-                width: 90,
-                height: 90,
-                borderRadius: 16,
+                width: 70,
+                height: 70,
+                borderRadius: 14,
                 backgroundColor: COLORS.coffeeBg,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Text style={{ fontSize: 44 }}>🧊</Text>
+              <Image
+                source={require("../../../assets/mockup.png")}
+                style={{ width: 48, height: 48 }}
+                resizeMode="contain"
+              />
             </View>
             <View style={{ flex: 1 }}>
               <Text
                 style={{
-                  fontSize: 16,
-                  fontWeight: "700",
+                  fontSize: 15,
+                  fontFamily: "BricolageGrotesque_700Bold",
                   color: COLORS.brown,
                   marginBottom: 4,
                 }}
               >
-                Iced Caramel
+                Cafe Latte
               </Text>
               <Text
                 style={{
                   fontSize: 12,
                   color: COLORS.neutral,
-                  lineHeight: 17,
                   marginBottom: 10,
                 }}
               >
-                Cold brew with caramel drizzle
+                Rich espresso with steamed milk
               </Text>
               <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: "800",
-                    color: COLORS.caramel,
+                    color: COLORS.brown,
                   }}
                 >
-                  $5.00
+                  $4.50
                 </Text>
-                <View
+                <Pressable
                   style={{
                     backgroundColor: COLORS.brown,
-                    width: 32,
-                    height: 32,
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
                     borderRadius: 10,
-                    alignItems: "center",
-                    justifyContent: "center",
                   }}
                 >
-                  <Text style={{ color: COLORS.white, fontSize: 18, marginTop: -1 }}>+</Text>
-                </View>
+                  <Text style={{ color: COLORS.white, fontSize: 12, fontWeight: "700" }}>Add to cart</Text>
+                </Pressable>
               </View>
             </View>
           </View>

@@ -3,8 +3,8 @@ import { Tabs } from "expo-router";
 import {
   Home,
   Coffee,
-  Star,
-  MapPin,
+  ShoppingBag,
+  ClipboardList,
   User,
 } from "lucide-react-native";
 import type { ColorValue } from "react-native";
@@ -21,8 +21,8 @@ function TabBarIcon({
   const icons: Record<string, React.ReactNode> = {
     home: <Home size={24} color={color as string} />,
     menu: <Coffee size={24} color={color as string} />,
-    reviews: <Star size={24} color={color as string} />,
-    "visit-us": <MapPin size={24} color={color as string} />,
+    cart: <ShoppingBag size={24} color={color as string} />,
+    orders: <ClipboardList size={24} color={color as string} />,
     profile: <User size={24} color={color as string} />,
   };
   return <>{icons[name]}</>;
@@ -33,7 +33,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#6b341a",
+        tabBarActiveTintColor: "#3c2415",
         tabBarInactiveTintColor: "#a8a29e",
         tabBarStyle: {
           borderTopColor: "#f2e8d9",
@@ -67,20 +67,20 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="reviews"
+        name="cart"
         options={{
-          title: "Reviews",
+          title: "Cart",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="reviews" color={color} focused={focused} />
+            <TabBarIcon name="cart" color={color} focused={focused} />
           ),
         }}
       />
       <Tabs.Screen
-        name="visit-us"
+        name="orders"
         options={{
-          title: "Visit Us",
+          title: "Orders",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name="visit-us" color={color} focused={focused} />
+            <TabBarIcon name="orders" color={color} focused={focused} />
           ),
         }}
       />
@@ -91,18 +91,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name="profile" color={color} focused={focused} />
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="cart"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
-        name="orders"
-        options={{
-          href: null,
         }}
       />
     </Tabs>
