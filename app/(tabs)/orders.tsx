@@ -132,7 +132,7 @@ export default function OrdersTab() {
               <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>{order.price}</Text>
               {order.status === "Delivered" && (
                 <Pressable
-                  onPress={() => router.push("/(stack)/product-details")}
+                  onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: order.id, name: (order as any).name || "Coffee", price: order.price, description: "", tag: "", category: "coffee" } })}
                   style={{
                     paddingHorizontal: 14,
                     paddingVertical: 6,
