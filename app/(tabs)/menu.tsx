@@ -137,7 +137,7 @@ export default function MenuTab() {
               onPress={() =>
                 router.push({
                   pathname: "/(stack)/product-details",
-                  params: { id: item.id, name: item.name, price: item.price },
+                  params: { id: item.id, name: item.name, price: item.price, description: (item as any).description || "", tag: (item as any).tag || "", category: item.category },
                 })
               }
               style={{
