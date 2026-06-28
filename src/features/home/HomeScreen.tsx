@@ -28,6 +28,9 @@ import {
   CupSoda,
   Cookie,
   Cake,
+  Heart,
+  Bell,
+  MapPin,
 } from "lucide-react-native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
@@ -86,10 +89,10 @@ const allProducts = [
   { id: "14", name: "Ube Taro Wave", description: "Purple yam, taro pearls, sweet condensed.", price: "$6.75", category: "boba", tag: "Veggie" },
   { id: "15", name: "Yuzu Green Tea", description: "Citrus yuzu, jade tea, crystal boba.", price: "$6.25", category: "boba", tag: "New" },
   { id: "16", name: "Chocolate Boba", description: "Dark cocoa, milk, chewy pearls, whipped top.", price: "$6.50", category: "boba" },
-  { id: "13", name: "Butter Croissant", description: "Flaky, golden, 32 layers of buttery joy.", price: "$3.75", category: "pastry" },
-  { id: "14", name: "Caramel Cupcake", description: "Salted caramel frosting, sprinkle of magic.", price: "$4.25", category: "pastry", tag: "Hot Pick" },
-  { id: "15", name: "Strawberry Danish", description: "Fresh berries, vanilla cream, sugar dust.", price: "$4.50", category: "pastry", tag: "Hot Pick" },
-  { id: "16", name: "Glazed Donut", description: "Pillow-soft, classic glaze, melts in mouth.", price: "$3.25", category: "pastry" },
+  { id: "13p", name: "Butter Croissant", description: "Flaky, golden, 32 layers of buttery joy.", price: "$3.75", category: "pastry" },
+  { id: "14p", name: "Caramel Cupcake", description: "Salted caramel frosting, sprinkle of magic.", price: "$4.25", category: "pastry", tag: "Hot Pick" },
+  { id: "15p", name: "Strawberry Danish", description: "Fresh berries, vanilla cream, sugar dust.", price: "$4.50", category: "pastry", tag: "Hot Pick" },
+  { id: "16p", name: "Glazed Donut", description: "Pillow-soft, classic glaze, melts in mouth.", price: "$3.25", category: "pastry" },
   { id: "17", name: "Choco Chip Cookie", description: "Warm, gooey center, crunchy edges.", price: "$2.75", category: "pastry" },
   { id: "18", name: "Mini Apple Pie", description: "Cinnamon apples, lattice crust, hug inside.", price: "$4.75", category: "pastry", tag: "New" },
   { id: "19", name: "Peach Frangipane", description: "Almond cream, ripe peaches, flaky base.", price: "$4.50", category: "pastry", tag: "New" },
@@ -104,6 +107,8 @@ const allProducts = [
   { id: "28", name: "Eggs Benedict", description: "Poached eggs, hollandaise, spinach, muffin.", price: "$11.50", category: "brunch", tag: "New" },
 ];
 
+const flashSaleFilters = ["All", "Newest", "Popular", "Hot Picks"];
+
 function getGreeting(): string {
   const hour = new Date().getHours();
   if (hour < 12) return "Good Morning";
@@ -116,9 +121,18 @@ export function HomeScreen() {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("coffee");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [activeFlashFilter, setActiveFlashFilter] = useState("All");
   const bannerRef = useRef<any>(null);
   const [bannerIndex, setBannerIndex] = useState(0);
   const float = useSharedValue(0);
+
+  useEffect(() => {
+    Image.prefetch(require("../../../assets/mockup.png"));
+    Image.prefetch(require("../../../assets/pastery.png"));
+    Image.prefetch(require("../../../assets/boba.png"));
+    Image.prefetch(require("../../../assets/brunch.png"));
+    BANNER_IMAGES.forEach((img) => Image.prefetch(img));
+  }, []);
 
   useEffect(() => {
     float.value = withRepeat(
@@ -157,54 +171,65 @@ export function HomeScreen() {
     }
   };
 
-  const filteredProducts = allProducts.filter((p) => p.category === activeCategory);
+  const filteredByCategory = allProducts.filter((p) => p.category === activeCategory);
+
+  const flashSaleProducts = allProducts.filter((p) => {
+    if (activeFlashFilter === "Newest") return p.tag === "New";
+    if (activeFlashFilter === "Popular") return p.tag === "Hot Pick";
+    if (activeFlashFilter === "Hot Picks") return p.tag === "Hot Pick";
+    return true;
+  }).slice(0, 6);
 
   const floatStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: float.value }],
   }));
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 100 }}
       >
-        {/* ─── 1. HEADER ─── */}
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingTop: Platform.OS === "ios" ? 16 : 12,
-            paddingBottom: 4,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 34,
-              fontFamily: "Pacifico_400Regular",
-              color: COLORS.brown,
-              letterSpacing: -0.3,
-            }}
-          >
-            Creatix
-          </Text>
-        </View>
-
-        {/* ─── 2. GREETING ─── */}
+        {/* ─── 1. HEADER: Location + Bell ─── */}
         <View
           style={{
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
+            paddingTop: Platform.OS === "ios" ? 16 : 12,
             paddingHorizontal: PADDING,
-            paddingTop: 8,
-            paddingBottom: 12,
+            paddingBottom: 4,
           }}
         >
+          <View>
+            <Text style={{ fontSize: 12, color: COLORS.neutralLight }}>Location</Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 4, marginTop: 2 }}>
+              <MapPin size={14} color={COLORS.brown} />
+              <Text style={{ fontSize: 14, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.brown }}>
+                Creatix Cafe
+              </Text>
+            </View>
+          </View>
+          <Pressable
+            onPress={() => router.push("/(tabs)/profile")}
+            style={{
+              width: 44,
+              height: 44,
+              borderRadius: 22,
+              backgroundColor: COLORS.cream,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Bell size={20} color={COLORS.brown} />
+          </Pressable>
+        </View>
+
+        {/* ─── 2. GREETING ─── */}
+        <View style={{ paddingHorizontal: PADDING, paddingTop: 10, paddingBottom: 12 }}>
           <Text
             style={{
-              fontSize: 22,
+              fontSize: 24,
               fontFamily: "BricolageGrotesque_700Bold",
               color: COLORS.brown,
               letterSpacing: -0.3,
@@ -212,19 +237,9 @@ export function HomeScreen() {
           >
             {getGreeting()}
           </Text>
-          <Pressable
-            onPress={() => router.push("/(tabs)/profile")}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: COLORS.coffeeBg,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <User size={20} color={COLORS.brown} />
-          </Pressable>
+          <Text style={{ fontSize: 13, color: COLORS.neutralLight, marginTop: 2 }}>
+            It's time for coffee break
+          </Text>
         </View>
 
         {/* ─── 3. SEARCH BAR ─── */}
@@ -232,52 +247,78 @@ export function HomeScreen() {
           style={{
             paddingHorizontal: PADDING,
             marginBottom: 20,
+            zIndex: 100,
           }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLORS.warmWhite,
-              borderRadius: 14,
-              paddingHorizontal: 14,
-              paddingVertical: Platform.OS === "ios" ? 12 : 10,
-              borderWidth: 1,
-              borderColor: COLORS.border,
-              gap: 10,
-            }}
-          >
-            <Search size={18} color={COLORS.neutralLight} />
-            <TextInput
-              value={searchText}
-              onChangeText={(text) => { setSearchText(text); setShowSuggestions(true); }}
-              placeholder=""
-              placeholderTextColor={COLORS.neutralLight}
-              selectionColor={COLORS.brown}
-              onFocus={() => setShowSuggestions(true)}
-              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-              onSubmitEditing={() => {
-                setShowSuggestions(false);
-                if (searchText.trim()) {
-                  router.push({
-                    pathname: "/(stack)/search",
-                    params: { query: searchText.trim() },
-                  });
-                }
-              }}
-              returnKeyType="search"
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+            <View
               style={{
                 flex: 1,
-                fontSize: 14,
-                color: COLORS.brown,
-                padding: 0,
-                outlineStyle: "none" as any,
+                flexDirection: "row",
+                alignItems: "center",
+                backgroundColor: COLORS.cream,
+                borderRadius: 14,
+                paddingHorizontal: 14,
+                paddingVertical: Platform.OS === "ios" ? 12 : 10,
+                gap: 10,
               }}
-            />
-            <SlidersHorizontal size={18} color={COLORS.brown} />
+            >
+              <Search size={18} color={COLORS.neutralLight} />
+              <TextInput
+                value={searchText}
+                onChangeText={(text) => { setSearchText(text); setShowSuggestions(true); }}
+                placeholder="Search"
+                placeholderTextColor={COLORS.neutralLight}
+                selectionColor={COLORS.brown}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => setTimeout(() => setShowSuggestions(false), 300)}
+                onSubmitEditing={() => {
+                  setShowSuggestions(false);
+                  if (searchText.trim()) {
+                    router.push({
+                      pathname: "/(stack)/search",
+                      params: { query: searchText.trim() },
+                    });
+                  }
+                }}
+                returnKeyType="search"
+                style={{
+                  flex: 1,
+                  fontSize: 14,
+                  color: COLORS.brown,
+                  padding: 0,
+                  outlineStyle: "none" as any,
+                }}
+              />
+            </View>
+            <Pressable
+              style={{
+                width: 44,
+                height: 44,
+                borderRadius: 14,
+                backgroundColor: COLORS.brown,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <SlidersHorizontal size={18} color={COLORS.white} />
+            </Pressable>
           </View>
           {showSuggestions && searchText.trim().length > 0 ? (
-            <View style={{ position: "absolute", top: 50, left: PADDING, right: PADDING, backgroundColor: COLORS.cream, borderRadius: 12, maxHeight: 200, zIndex: 10 }}>
+            <View
+              style={{
+                position: "absolute",
+                top: 54,
+                left: -PADDING,
+                right: -PADDING,
+                backgroundColor: COLORS.cream,
+                borderRadius: 14,
+                marginHorizontal: PADDING,
+                maxHeight: 220,
+                overflow: "hidden",
+                zIndex: 200,
+              }}
+            >
               <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
                 {allProducts
                   .filter((p) => p.name.toLowerCase().includes(searchText.trim().toLowerCase()))
@@ -290,12 +331,21 @@ export function HomeScreen() {
                         setShowSuggestions(false);
                         router.push({ pathname: "/(stack)/search", params: { query: item.name } });
                       }}
-                      style={{ paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: COLORS.border }}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        paddingHorizontal: 14,
+                        paddingVertical: 12,
+                      }}
                     >
-                    <Text style={{ fontSize: 13, color: COLORS.brown }}>{item.name}</Text>
-                    <Text style={{ fontSize: 11, color: COLORS.neutralLight }}>{item.price}</Text>
-                   </Pressable>
-                ))}
+                      <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                        <Search size={14} color={COLORS.neutralLight} />
+                        <Text style={{ fontSize: 13, color: COLORS.brown }}>{item.name}</Text>
+                      </View>
+                      <Text style={{ fontSize: 12, color: COLORS.neutralLight }}>{item.price}</Text>
+                    </Pressable>
+                  ))}
               </ScrollView>
             </View>
           ) : null}
@@ -341,17 +391,21 @@ export function HomeScreen() {
         </View>
 
         {/* ─── 5. CATEGORY ─── */}
-        <View style={{ marginBottom: 20, paddingHorizontal: PADDING }}>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "BricolageGrotesque_700Bold",
-              color: COLORS.brown,
-              marginBottom: 14,
-            }}
-          >
-            Category
-          </Text>
+        <View style={{ marginBottom: 24, paddingHorizontal: PADDING }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: "BricolageGrotesque_700Bold",
+                color: COLORS.brown,
+              }}
+            >
+              Category
+            </Text>
+            <Pressable onPress={() => router.push("/(tabs)/menu")}>
+              <Text style={{ fontSize: 13, color: COLORS.neutral, fontWeight: "500" }}>See All</Text>
+            </Pressable>
+          </View>
           <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
             {categories.map((cat) => (
               <Pressable
@@ -365,17 +419,17 @@ export function HomeScreen() {
               >
                 <View
                   style={{
-                    width: 80,
-                    height: 80,
-                    borderRadius: 20,
-                    backgroundColor: activeCategory === cat.id ? COLORS.brown : COLORS.warmWhite,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 30,
+                    backgroundColor: activeCategory === cat.id ? COLORS.brown : COLORS.cream,
                     borderWidth: 1.5,
                     borderColor: activeCategory === cat.id ? COLORS.brown : COLORS.border,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <cat.icon size={30} color={activeCategory === cat.id ? COLORS.white : COLORS.brown} />
+                  <cat.icon size={24} color={activeCategory === cat.id ? COLORS.white : COLORS.brown} />
                 </View>
                 <Text
                   style={{
@@ -392,88 +446,180 @@ export function HomeScreen() {
           </View>
         </View>
 
-        {/* ─── 6. PRODUCTS GRID ─── */}
-        <View style={{ paddingHorizontal: PADDING, flexDirection: "row", flexWrap: "wrap", gap: 14, marginBottom: 20 }}>
-          {filteredProducts.map((item) => (
-            <Pressable
-              key={item.id}
-              onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description, tag: item.tag } })}
+        {/* ─── 6. FLASH SALE ─── */}
+        <View style={{ marginBottom: 24, paddingHorizontal: PADDING }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+            <Text
               style={{
-                width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
-                backgroundColor: COLORS.warmWhite,
-                borderRadius: 20,
-                borderWidth: 1,
-                borderColor: COLORS.border,
-                padding: 12,
-                alignItems: "center",
+                fontSize: 18,
+                fontFamily: "BricolageGrotesque_700Bold",
+                color: COLORS.brown,
               }}
             >
-              <View
-                style={{
-                  width: "100%",
-                  height: 120,
-                  backgroundColor: COLORS.creamDark,
-                  borderRadius: 14,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: 10,
-                }}
-              >
-                <Image
-                  source={item.category === "pastry" ? require("../../../assets/pastery.png") : item.category === "boba" ? require("../../../assets/boba.png") : item.category === "brunch" ? require("../../../assets/brunch.png") : require("../../../assets/mockup.png")}
-                  style={{ width: 90, height: 100 }}
-                  resizeMode="contain"
-                />
-                {item.tag ? (
-                  <View style={{ position: "absolute", top: 8, left: 8, backgroundColor: item.tag === "Hot Pick" ? "#E53935" : item.tag === "Veggie" ? "#2E7D32" : "#43A047", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
-                    <Text style={{ fontSize: 9, fontWeight: "700", color: COLORS.white }}>{item.tag}</Text>
-                  </View>
-                ) : null}
+              Flash Sale
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+              <Text style={{ fontSize: 12, color: COLORS.neutral }}>Closing in:</Text>
+              <View style={{ flexDirection: "row", gap: 4 }}>
+                {["02", "12", "56"].map((t, i) => (
+                  <React.Fragment key={i}>
+                    <View style={{ backgroundColor: COLORS.cream, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
+                      <Text style={{ fontSize: 12, fontWeight: "700", color: COLORS.brown }}>{t}</Text>
+                    </View>
+                    {i < 2 && <Text style={{ fontSize: 12, color: COLORS.neutral, alignSelf: "center" }}>:</Text>}
+                  </React.Fragment>
+                ))}
               </View>
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontFamily: "BricolageGrotesque_700Bold",
-                  color: COLORS.brown,
-                  marginBottom: 2,
-                  textAlign: "center",
-                }}
-              >
-                {item.name}
-              </Text>
-              {item.description ? (
-                <Text
-                  style={{
-                    fontSize: 11,
-                    color: COLORS.neutral,
-                    textAlign: "center",
-                    marginBottom: 6,
-                    lineHeight: 12,
-                  }}
-                  numberOfLines={2}
-                >
-                  {item.description}
-                </Text>
-              ) : null}
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: 2 }}>
-                <Text style={{ fontSize: 14, fontWeight: "800", color: COLORS.brown }}>
-                  {item.price}
-                </Text>
+            </View>
+          </View>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginBottom: 14 }}>
+            <View style={{ flexDirection: "row", gap: 8 }}>
+              {flashSaleFilters.map((filter) => (
                 <Pressable
+                  key={filter}
+                  onPress={() => setActiveFlashFilter(filter)}
                   style={{
-                    width: 32,
-                    height: 32,
-                    borderRadius: 16,
-                    backgroundColor: COLORS.brownLight,
-                    alignItems: "center",
-                    justifyContent: "center",
+                    paddingHorizontal: 16,
+                    paddingVertical: 8,
+                    borderRadius: 20,
+                    backgroundColor: activeFlashFilter === filter ? COLORS.brown : COLORS.cream,
                   }}
                 >
-                  <Plus size={16} color={COLORS.white} />
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: activeFlashFilter === filter ? COLORS.white : COLORS.neutral,
+                    }}
+                  >
+                    {filter}
+                  </Text>
                 </Pressable>
-              </View>
+              ))}
+            </View>
+          </ScrollView>
+
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 14 }}>
+            {flashSaleProducts.map((item) => (
+              <Pressable
+                key={item.id}
+                onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description || "", tag: item.tag || "", category: item.category } })}
+                style={{
+                  width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
+                  backgroundColor: COLORS.cream,
+                  borderRadius: 18,
+                  overflow: "hidden",
+                }}
+              >
+                <View style={{ width: "100%", height: 140, backgroundColor: COLORS.coffeeBg }}>
+                  <Image
+                    source={item.category === "pastry" ? require("../../../assets/pastery.png") : item.category === "boba" ? require("../../../assets/boba.png") : item.category === "brunch" ? require("../../../assets/brunch.png") : require("../../../assets/mockup.png")}
+                    style={{ width: "100%", height: "100%" }}
+                    resizeMode="contain"
+                  />
+                  <Pressable
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onPress={() => {}}
+                  >
+                    <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
+                      <Heart size={14} color={COLORS.brown} />
+                    </View>
+                  </Pressable>
+                  {item.tag ? (
+                    <View style={{ position: "absolute", top: 10, left: 10, backgroundColor: item.tag === "Hot Pick" ? "#E53935" : item.tag === "Veggie" ? "#2E7D32" : "#43A047", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
+                      <Text style={{ fontSize: 9, fontWeight: "700", color: COLORS.white }}>{item.tag}</Text>
+                    </View>
+                  ) : null}
+                </View>
+                <View style={{ padding: 10 }}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: "BricolageGrotesque_700Bold",
+                      color: COLORS.brown,
+                      marginBottom: 4,
+                    }}
+                    numberOfLines={1}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: "800", color: COLORS.brown }}>
+                    {item.price}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
+        {/* ─── 7. PRODUCTS GRID ─── */}
+        <View style={{ paddingHorizontal: PADDING, marginBottom: 20 }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: "BricolageGrotesque_700Bold",
+                color: COLORS.brown,
+              }}
+            >
+              All Products
+            </Text>
+            <Pressable onPress={() => router.push("/(tabs)/menu")}>
+              <Text style={{ fontSize: 13, color: COLORS.neutral, fontWeight: "500" }}>See All</Text>
             </Pressable>
-          ))}
+          </View>
+          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 14 }}>
+            {filteredByCategory.map((item) => (
+              <Pressable
+                key={item.id}
+                onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description || "", tag: item.tag || "", category: item.category } })}
+                style={{
+                  width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
+                  backgroundColor: COLORS.cream,
+                  borderRadius: 18,
+                  overflow: "hidden",
+                }}
+              >
+                <View style={{ width: "100%", height: 140, backgroundColor: COLORS.coffeeBg }}>
+                  <Image
+                    source={item.category === "pastry" ? require("../../../assets/pastery.png") : item.category === "boba" ? require("../../../assets/boba.png") : item.category === "brunch" ? require("../../../assets/brunch.png") : require("../../../assets/mockup.png")}
+                    style={{ width: "100%", height: "100%" }}
+                    resizeMode="contain"
+                  />
+                  <Pressable
+                    style={{ position: "absolute", top: 10, right: 10 }}
+                    onPress={() => {}}
+                  >
+                    <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
+                      <Heart size={14} color={COLORS.brown} />
+                    </View>
+                  </Pressable>
+                  {item.tag ? (
+                    <View style={{ position: "absolute", top: 10, left: 10, backgroundColor: item.tag === "Hot Pick" ? "#E53935" : item.tag === "Veggie" ? "#2E7D32" : "#43A047", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
+                      <Text style={{ fontSize: 9, fontWeight: "700", color: COLORS.white }}>{item.tag}</Text>
+                    </View>
+                  ) : null}
+                </View>
+                <View style={{ padding: 10 }}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: "BricolageGrotesque_700Bold",
+                      color: COLORS.brown,
+                      marginBottom: 4,
+                    }}
+                    numberOfLines={1}
+                  >
+                    {item.name}
+                  </Text>
+                  <Text style={{ fontSize: 14, fontWeight: "800", color: COLORS.brown }}>
+                    {item.price}
+                  </Text>
+                </View>
+              </Pressable>
+            ))}
+          </View>
         </View>
       </ScrollView>
     </View>
