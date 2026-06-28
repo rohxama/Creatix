@@ -70,20 +70,38 @@ const categories = [
 ];
 
 const allProducts = [
-  { id: "1", name: "Latte Macchiato", price: "$2.59", category: "coffee" },
-  { id: "2", name: "Iced Mocha", price: "$2.79", category: "boba" },
-  { id: "3", name: "Cappuccino", price: "$3.49", category: "coffee" },
-  { id: "4", name: "Lotus Latte", price: "$3.99", category: "coffee" },
-  { id: "5", name: "Iced Caramel", price: "$4.29", category: "boba" },
-  { id: "6", name: "Espresso", price: "$2.99", category: "coffee" },
-  { id: "7", name: "Taro Boba", price: "$3.79", category: "boba" },
-  { id: "8", name: "Croissant", price: "$2.49", category: "pastry" },
-  { id: "9", name: "Danish Pastry", price: "$3.49", category: "pastry" },
-  { id: "10", name: "Blueberry Muffin", price: "$2.99", category: "pastry" },
-  { id: "11", name: "Eggs Benedict", price: "$5.99", category: "brunch" },
-  { id: "12", name: "Avocado Toast", price: "$4.99", category: "brunch" },
-  { id: "13", name: "Pancakes", price: "$4.49", category: "brunch" },
-  { id: "14", name: "Matcha Boba", price: "$3.99", category: "boba" },
+  { id: "1", name: "Classic Latte", description: "Velvety espresso, steamed milk, a little leaf on top.", price: "$4.50", category: "coffee", tag: "Hot Pick" },
+  { id: "2", name: "Caramel Macchiato", description: "Vanilla, espresso, caramel drizzle. Sweet heaven.", price: "$5.25", category: "coffee", tag: "Hot Pick" },
+  { id: "3", name: "Espresso Doppio", description: "Two shots of pure magic. For the brave.", price: "$3.50", category: "coffee", tag: "Hot Pick" },
+  { id: "4", name: "Mocha Dream", description: "Chocolate, espresso, whipped cloud.", price: "$5.00", category: "coffee" },
+  { id: "5", name: "Iced Vanilla Cold Brew", description: "Slow-steeped 18 hours, vanilla cream foam.", price: "$5.50", category: "coffee", tag: "New" },
+  { id: "6", name: "Golden Flat White", description: "Honey + cinnamon flat white. Cozy in a cup.", price: "$5.25", category: "coffee" },
+  { id: "7", name: "Honey Oat Latte", description: "Oat milk, local honey, toasted cinnamon.", price: "$5.00", category: "coffee" },
+  { id: "8", name: "Hazelnut Mocha", description: "Nutty chocolate, espresso, cocoa dust.", price: "$5.50", category: "coffee" },
+  { id: "9", name: "Brown Sugar Boba", description: "Tiger stripes, chewy pearls, milky sweet.", price: "$6.00", category: "boba", tag: "Hot Pick" },
+  { id: "10", name: "Strawberry Milk Tea", description: "Real fruit, creamy milk, pop of boba.", price: "$6.25", category: "boba", tag: "Hot Pick" },
+  { id: "11", name: "Mango Slush Boba", description: "Frozen mango, popping yolk, sunshine sip.", price: "$6.50", category: "boba", tag: "New" },
+  { id: "12", name: "Matcha Latte Boba", description: "Ceremonial matcha, oat milk, tapioca pearls.", price: "$6.50", category: "boba" },
+  { id: "13", name: "Coconut Taro Boba", description: "Taro cream, coconut jelly, dreamy purple.", price: "$6.75", category: "boba", tag: "Veggie" },
+  { id: "14", name: "Ube Taro Wave", description: "Purple yam, taro pearls, sweet condensed.", price: "$6.75", category: "boba", tag: "Veggie" },
+  { id: "15", name: "Yuzu Green Tea", description: "Citrus yuzu, jade tea, crystal boba.", price: "$6.25", category: "boba", tag: "New" },
+  { id: "16", name: "Chocolate Boba", description: "Dark cocoa, milk, chewy pearls, whipped top.", price: "$6.50", category: "boba" },
+  { id: "13", name: "Butter Croissant", description: "Flaky, golden, 32 layers of buttery joy.", price: "$3.75", category: "pastry" },
+  { id: "14", name: "Caramel Cupcake", description: "Salted caramel frosting, sprinkle of magic.", price: "$4.25", category: "pastry", tag: "Hot Pick" },
+  { id: "15", name: "Strawberry Danish", description: "Fresh berries, vanilla cream, sugar dust.", price: "$4.50", category: "pastry", tag: "Hot Pick" },
+  { id: "16", name: "Glazed Donut", description: "Pillow-soft, classic glaze, melts in mouth.", price: "$3.25", category: "pastry" },
+  { id: "17", name: "Choco Chip Cookie", description: "Warm, gooey center, crunchy edges.", price: "$2.75", category: "pastry" },
+  { id: "18", name: "Mini Apple Pie", description: "Cinnamon apples, lattice crust, hug inside.", price: "$4.75", category: "pastry", tag: "New" },
+  { id: "19", name: "Peach Frangipane", description: "Almond cream, ripe peaches, flaky base.", price: "$4.50", category: "pastry", tag: "New" },
+  { id: "20", name: "Honey Walnut Scone", description: "Crunchy walnuts, honey glaze, buttery.", price: "$3.50", category: "pastry" },
+  { id: "21", name: "Avocado Toast", description: "Smashed avo, chili, lime, sourdough. Classic.", price: "$8.50", category: "brunch", tag: "Veggie" },
+  { id: "22", name: "Fluffy Pancakes", description: "Stack of three, maple, berry butter.", price: "$9.25", category: "brunch", tag: "Hot Pick" },
+  { id: "23", name: "Breakfast Bowl", description: "Eggs, beans, avocado, salsa, tortilla.", price: "$10.50", category: "brunch" },
+  { id: "24", name: "Bacon Egg Bagel", description: "Crispy bacon, fried egg, melty cheddar.", price: "$8.75", category: "brunch" },
+  { id: "25", name: "Banana Walnut Loaf", description: "Toasted, buttered, with honey drizzle.", price: "$5.50", category: "brunch", tag: "Veggie" },
+  { id: "26", name: "Shakshuka", description: "Spiced tomatoes, baked eggs, crusty bread.", price: "$11.00", category: "brunch", tag: "New" },
+  { id: "27", name: "Full English", description: "Eggs, beans, sausage, bacon, toast, tomato.", price: "$12.50", category: "brunch", tag: "Hot Pick" },
+  { id: "28", name: "Eggs Benedict", description: "Poached eggs, hollandaise, spinach, muffin.", price: "$11.50", category: "brunch", tag: "New" },
 ];
 
 function getGreeting(): string {
@@ -97,6 +115,7 @@ export function HomeScreen() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("coffee");
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const bannerRef = useRef<any>(null);
   const [bannerIndex, setBannerIndex] = useState(0);
   const float = useSharedValue(0);
@@ -231,11 +250,14 @@ export function HomeScreen() {
             <Search size={18} color={COLORS.neutralLight} />
             <TextInput
               value={searchText}
-              onChangeText={setSearchText}
+              onChangeText={(text) => { setSearchText(text); setShowSuggestions(true); }}
               placeholder=""
               placeholderTextColor={COLORS.neutralLight}
               selectionColor={COLORS.brown}
+              onFocus={() => setShowSuggestions(true)}
+              onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
               onSubmitEditing={() => {
+                setShowSuggestions(false);
                 if (searchText.trim()) {
                   router.push({
                     pathname: "/(stack)/search",
@@ -254,6 +276,29 @@ export function HomeScreen() {
             />
             <SlidersHorizontal size={18} color={COLORS.brown} />
           </View>
+          {showSuggestions && searchText.trim().length > 0 ? (
+            <View style={{ position: "absolute", top: 50, left: PADDING, right: PADDING, backgroundColor: COLORS.cream, borderRadius: 12, maxHeight: 200, zIndex: 10 }}>
+              <ScrollView nestedScrollEnabled showsVerticalScrollIndicator={false}>
+                {allProducts
+                  .filter((p) => p.name.toLowerCase().includes(searchText.trim().toLowerCase()))
+                  .slice(0, 10)
+                  .map((item) => (
+                    <Pressable
+                      key={item.id}
+                      onPress={() => {
+                        setSearchText(item.name);
+                        setShowSuggestions(false);
+                        router.push({ pathname: "/(stack)/search", params: { query: item.name } });
+                      }}
+                      style={{ paddingHorizontal: 14, paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: COLORS.border }}
+                    >
+                    <Text style={{ fontSize: 13, color: COLORS.brown }}>{item.name}</Text>
+                    <Text style={{ fontSize: 11, color: COLORS.neutralLight }}>{item.price}</Text>
+                   </Pressable>
+                ))}
+              </ScrollView>
+            </View>
+          ) : null}
         </View>
 
         {/* ─── 4. BANNER SLIDER ─── */}
@@ -330,7 +375,7 @@ export function HomeScreen() {
                     justifyContent: "center",
                   }}
                 >
-                  <cat.icon size={32} color={activeCategory === cat.id ? COLORS.white : COLORS.brown} />
+                  <cat.icon size={30} color={activeCategory === cat.id ? COLORS.white : COLORS.brown} />
                 </View>
                 <Text
                   style={{
@@ -352,61 +397,80 @@ export function HomeScreen() {
           {filteredProducts.map((item) => (
             <Pressable
               key={item.id}
-              onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price } })}
+              onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description, tag: item.tag } })}
               style={{
                 width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
                 backgroundColor: COLORS.warmWhite,
                 borderRadius: 20,
                 borderWidth: 1,
                 borderColor: COLORS.border,
-                overflow: "hidden",
+                padding: 12,
+                alignItems: "center",
               }}
             >
               <View
                 style={{
                   width: "100%",
-                  height: 150,
-                  backgroundColor: COLORS.coffeeBg,
+                  height: 120,
+                  backgroundColor: COLORS.creamDark,
+                  borderRadius: 14,
                   alignItems: "center",
                   justifyContent: "center",
-                  borderBottomLeftRadius: 20,
-                  borderBottomRightRadius: 20,
+                  marginBottom: 10,
                 }}
               >
                 <Image
-                  source={require("../../../assets/mockup.png")}
-                  style={{ width: 100, height: 100 }}
+                  source={item.category === "pastry" ? require("../../../assets/pastery.png") : item.category === "boba" ? require("../../../assets/boba.png") : item.category === "brunch" ? require("../../../assets/brunch.png") : require("../../../assets/mockup.png")}
+                  style={{ width: 90, height: 100 }}
                   resizeMode="contain"
                 />
+                {item.tag ? (
+                  <View style={{ position: "absolute", top: 8, left: 8, backgroundColor: item.tag === "Hot Pick" ? "#E53935" : item.tag === "Veggie" ? "#2E7D32" : "#43A047", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
+                    <Text style={{ fontSize: 9, fontWeight: "700", color: COLORS.white }}>{item.tag}</Text>
+                  </View>
+                ) : null}
               </View>
-              <View style={{ padding: 12 }}>
+              <Text
+                style={{
+                  fontSize: 14,
+                  fontFamily: "BricolageGrotesque_700Bold",
+                  color: COLORS.brown,
+                  marginBottom: 2,
+                  textAlign: "center",
+                }}
+              >
+                {item.name}
+              </Text>
+              {item.description ? (
                 <Text
                   style={{
-                    fontSize: 14,
-                    fontFamily: "BricolageGrotesque_700Bold",
-                    color: COLORS.brown,
+                    fontSize: 11,
+                    color: COLORS.neutral,
+                    textAlign: "center",
                     marginBottom: 6,
+                    lineHeight: 12,
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.description}
+                </Text>
+              ) : null}
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: 2 }}>
+                <Text style={{ fontSize: 14, fontWeight: "800", color: COLORS.brown }}>
+                  {item.price}
+                </Text>
+                <Pressable
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 16,
+                    backgroundColor: COLORS.brownLight,
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
-                  {item.name}
-                </Text>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                  <Text style={{ fontSize: 15, fontWeight: "800", color: COLORS.brown }}>
-                    {item.price}
-                  </Text>
-                  <Pressable
-                    style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: 16,
-                      backgroundColor: COLORS.sage,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Plus size={16} color={COLORS.white} />
-                  </Pressable>
-                </View>
+                  <Plus size={16} color={COLORS.white} />
+                </Pressable>
               </View>
             </Pressable>
           ))}
