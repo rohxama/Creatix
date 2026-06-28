@@ -19,7 +19,16 @@ import Animated, {
   Easing,
 } from "react-native-reanimated";
 import { useRouter } from "expo-router";
-import { Search, User, Star, Plus, SlidersHorizontal } from "lucide-react-native";
+import {
+  Search,
+  User,
+  Plus,
+  SlidersHorizontal,
+  Coffee,
+  CupSoda,
+  Cookie,
+  Cake,
+} from "lucide-react-native";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const PADDING = 20;
@@ -53,16 +62,28 @@ const COLORS = {
   border: "#ddd0c0",
 };
 
-const whatsNewItems = [
-  { id: "1", name: "Cappuccino" },
-  { id: "2", name: "Iced Coffee" },
-  { id: "3", name: "Mocha" },
+const categories = [
+  { id: "coffee", label: "Coffee", icon: Coffee },
+  { id: "pastry", label: "Pastry", icon: Cake },
+  { id: "boba", label: "Boba", icon: CupSoda },
+  { id: "brunch", label: "Brunch", icon: Cookie },
 ];
 
-const popularItems = [
-  { id: "1", name: "Cafe Latte", rating: 4.8, price: "$4.50" },
-  { id: "2", name: "Iced Caramel Latte", rating: 4.9, price: "$5.20" },
-  { id: "3", name: "Cappuccino", rating: 4.7, price: "$4.90" },
+const allProducts = [
+  { id: "1", name: "Latte Macchiato", price: "$2.59", category: "coffee" },
+  { id: "2", name: "Iced Mocha", price: "$2.79", category: "boba" },
+  { id: "3", name: "Cappuccino", price: "$3.49", category: "coffee" },
+  { id: "4", name: "Lotus Latte", price: "$3.99", category: "coffee" },
+  { id: "5", name: "Iced Caramel", price: "$4.29", category: "boba" },
+  { id: "6", name: "Espresso", price: "$2.99", category: "coffee" },
+  { id: "7", name: "Taro Boba", price: "$3.79", category: "boba" },
+  { id: "8", name: "Croissant", price: "$2.49", category: "pastry" },
+  { id: "9", name: "Danish Pastry", price: "$3.49", category: "pastry" },
+  { id: "10", name: "Blueberry Muffin", price: "$2.99", category: "pastry" },
+  { id: "11", name: "Eggs Benedict", price: "$5.99", category: "brunch" },
+  { id: "12", name: "Avocado Toast", price: "$4.99", category: "brunch" },
+  { id: "13", name: "Pancakes", price: "$4.49", category: "brunch" },
+  { id: "14", name: "Matcha Boba", price: "$3.99", category: "boba" },
 ];
 
 function getGreeting(): string {
@@ -75,7 +96,8 @@ function getGreeting(): string {
 export function HomeScreen() {
   const router = useRouter();
   const [searchText, setSearchText] = useState("");
-  const bannerRef = useRef<ScrollView>(null);
+  const [activeCategory, setActiveCategory] = useState("coffee");
+  const bannerRef = useRef<any>(null);
   const [bannerIndex, setBannerIndex] = useState(0);
   const float = useSharedValue(0);
 
@@ -86,7 +108,7 @@ export function HomeScreen() {
         easing: Easing.inOut(Easing.ease),
       }),
       -1,
-      true
+      true,
     );
   }, []);
 
@@ -116,6 +138,8 @@ export function HomeScreen() {
     }
   };
 
+  const filteredProducts = allProducts.filter((p) => p.category === activeCategory);
+
   const floatStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: float.value }],
   }));
@@ -129,14 +153,16 @@ export function HomeScreen() {
         {/* ─── 1. HEADER ─── */}
         <View
           style={{
+            flexDirection: "row",
             alignItems: "center",
+            justifyContent: "center",
             paddingTop: Platform.OS === "ios" ? 16 : 12,
             paddingBottom: 4,
           }}
         >
           <Text
             style={{
-              fontSize: 26,
+              fontSize: 34,
               fontFamily: "Pacifico_400Regular",
               color: COLORS.brown,
               letterSpacing: -0.3,
@@ -208,11 +234,22 @@ export function HomeScreen() {
               onChangeText={setSearchText}
               placeholder=""
               placeholderTextColor={COLORS.neutralLight}
+              selectionColor={COLORS.brown}
+              onSubmitEditing={() => {
+                if (searchText.trim()) {
+                  router.push({
+                    pathname: "/(stack)/search",
+                    params: { query: searchText.trim() },
+                  });
+                }
+              }}
+              returnKeyType="search"
               style={{
                 flex: 1,
                 fontSize: 14,
                 color: COLORS.brown,
                 padding: 0,
+                outlineStyle: "none" as any,
               }}
             />
             <SlidersHorizontal size={18} color={COLORS.brown} />
@@ -220,7 +257,13 @@ export function HomeScreen() {
         </View>
 
         {/* ─── 4. BANNER SLIDER ─── */}
-        <View style={{ marginBottom: 24, marginHorizontal: PADDING, overflow: "hidden" }}>
+        <View
+          style={{
+            marginBottom: 24,
+            marginHorizontal: PADDING,
+            overflow: "hidden",
+          }}
+        >
           <ScrollView
             ref={bannerRef}
             horizontal
@@ -252,180 +295,121 @@ export function HomeScreen() {
           </ScrollView>
         </View>
 
-        {/* ─── 5. POPULAR NOW ─── */}
-        <View style={{ marginBottom: 24 }}>
+        {/* ─── 5. CATEGORY ─── */}
+        <View style={{ marginBottom: 20, paddingHorizontal: PADDING }}>
           <Text
             style={{
               fontSize: 16,
               fontFamily: "BricolageGrotesque_700Bold",
               color: COLORS.brown,
-              paddingHorizontal: PADDING,
-              marginBottom: 12,
+              marginBottom: 14,
             }}
           >
-            Popular Now
+            Category
           </Text>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingHorizontal: PADDING,
-              gap: 12,
-            }}
-          >
-            {popularItems.map((item) => (
-              <View
-                key={item.id}
+          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+            {categories.map((cat) => (
+              <Pressable
+                key={cat.id}
+                onPress={() => setActiveCategory(cat.id)}
                 style={{
-                  width: 140,
-                  backgroundColor: COLORS.warmWhite,
-                  borderRadius: 18,
-                  borderWidth: 1,
-                  borderColor: COLORS.border,
-                  overflow: "hidden",
+                  alignItems: "center",
+                  gap: 8,
+                  width: (SCREEN_WIDTH - PADDING * 2 - 48) / 4,
                 }}
               >
                 <View
                   style={{
-                    width: "100%",
-                    height: 100,
-                    backgroundColor: COLORS.coffeeBg,
+                    width: 80,
+                    height: 80,
+                    borderRadius: 20,
+                    backgroundColor: activeCategory === cat.id ? COLORS.brown : COLORS.warmWhite,
+                    borderWidth: 1.5,
+                    borderColor: activeCategory === cat.id ? COLORS.brown : COLORS.border,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
                 >
-                  <Image
-                    source={require("../../../assets/mockup.png")}
-                    style={{ width:80, height: 80 }}
-                    resizeMode="contain"
-                  />
+                  <cat.icon size={32} color={activeCategory === cat.id ? COLORS.white : COLORS.brown} />
                 </View>
-                <View style={{ padding: 10 }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "BricolageGrotesque_700Bold",
-                      color: COLORS.brown,
-                      marginBottom: 4,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <View style={{ flexDirection: "row", alignItems: "center", gap: 3, marginBottom: 8 }}>
-                    <Star size={11} color="#F5A623" fill="#F5A623" />
-                    <Text
-                      style={{
-                        fontSize: 11,
-                        fontWeight: "600",
-                        color: COLORS.neutral,
-                      }}
-                    >
-                      {item.rating}
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "800",
-                        color: COLORS.brown,
-                      }}
-                    >
-                      {item.price}
-                    </Text>
-                    <Pressable
-                      style={{
-                        width: 28,
-                        height: 28,
-                        borderRadius: 14,
-                        backgroundColor: COLORS.brown,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Plus size={14} color={COLORS.white} />
-                    </Pressable>
-                  </View>
-                </View>
-              </View>
-            ))}
-          </ScrollView>
-        </View>
-
-        {/* ─── 7. BOTTOM PROMO ─── */}
-        <View style={{ paddingHorizontal: PADDING }}>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLORS.warmWhite,
-              borderRadius: 18,
-              borderWidth: 1,
-              borderColor: COLORS.border,
-              padding: 14,
-              gap: 14,
-            }}
-          >
-            <View
-              style={{
-                width: 70,
-                height: 70,
-                borderRadius: 14,
-                backgroundColor: COLORS.coffeeBg,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Image
-                source={require("../../../assets/mockup.png")}
-                style={{ width: 48, height: 48 }}
-                resizeMode="contain"
-              />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontFamily: "BricolageGrotesque_700Bold",
-                  color: COLORS.brown,
-                  marginBottom: 4,
-                }}
-              >
-                Cafe Latte
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: COLORS.neutral,
-                  marginBottom: 10,
-                }}
-              >
-                Rich espresso with steamed milk
-              </Text>
-              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                 <Text
                   style={{
-                    fontSize: 16,
-                    fontWeight: "800",
-                    color: COLORS.brown,
+                    fontSize: 11,
+                    fontWeight: activeCategory === cat.id ? "700" : "500",
+                    color: activeCategory === cat.id ? COLORS.brown : COLORS.neutral,
+                    textAlign: "center",
                   }}
                 >
-                  $4.50
+                  {cat.label}
                 </Text>
-                <Pressable
+              </Pressable>
+            ))}
+          </View>
+        </View>
+
+        {/* ─── 6. PRODUCTS GRID ─── */}
+        <View style={{ paddingHorizontal: PADDING, flexDirection: "row", flexWrap: "wrap", gap: 14, marginBottom: 20 }}>
+          {filteredProducts.map((item) => (
+            <Pressable
+              key={item.id}
+              onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price } })}
+              style={{
+                width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
+                backgroundColor: COLORS.warmWhite,
+                borderRadius: 20,
+                borderWidth: 1,
+                borderColor: COLORS.border,
+                overflow: "hidden",
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  height: 150,
+                  backgroundColor: COLORS.coffeeBg,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderBottomLeftRadius: 20,
+                  borderBottomRightRadius: 20,
+                }}
+              >
+                <Image
+                  source={require("../../../assets/mockup.png")}
+                  style={{ width: 100, height: 100 }}
+                  resizeMode="contain"
+                />
+              </View>
+              <View style={{ padding: 12 }}>
+                <Text
                   style={{
-                    backgroundColor: COLORS.brown,
-                    paddingHorizontal: 16,
-                    paddingVertical: 8,
-                    borderRadius: 10,
+                    fontSize: 14,
+                    fontFamily: "BricolageGrotesque_700Bold",
+                    color: COLORS.brown,
+                    marginBottom: 6,
                   }}
                 >
-                  <Text style={{ color: COLORS.white, fontSize: 12, fontWeight: "700" }}>Add to cart</Text>
-                </Pressable>
+                  {item.name}
+                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <Text style={{ fontSize: 15, fontWeight: "800", color: COLORS.brown }}>
+                    {item.price}
+                  </Text>
+                  <Pressable
+                    style={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: 16,
+                      backgroundColor: COLORS.sage,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Plus size={16} color={COLORS.white} />
+                  </Pressable>
+                </View>
               </View>
-            </View>
-          </View>
+            </Pressable>
+          ))}
         </View>
       </ScrollView>
     </View>
