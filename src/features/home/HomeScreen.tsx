@@ -292,6 +292,7 @@ export function HomeScreen() {
               />
             </View>
             <Pressable
+              onPress={() => router.push("/(tabs)/menu")}
               style={{
                 width: 44,
                 height: 44,
@@ -502,75 +503,6 @@ export function HomeScreen() {
 
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 14 }}>
             {flashSaleProducts.map((item) => (
-              <Pressable
-                key={item.id}
-                onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description || "", tag: item.tag || "", category: item.category } })}
-                style={{
-                  width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
-                  backgroundColor: COLORS.cream,
-                  borderRadius: 18,
-                  overflow: "hidden",
-                }}
-              >
-                <View style={{ width: "100%", height: 140, backgroundColor: COLORS.coffeeBg }}>
-                  <Image
-                    source={item.category === "pastry" ? require("../../../assets/pastery.png") : item.category === "boba" ? require("../../../assets/boba.png") : item.category === "brunch" ? require("../../../assets/brunch.png") : require("../../../assets/mockup.png")}
-                    style={{ width: "100%", height: "100%" }}
-                    resizeMode="contain"
-                  />
-                  <Pressable
-                    style={{ position: "absolute", top: 10, right: 10 }}
-                    onPress={() => {}}
-                  >
-                    <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
-                      <Heart size={14} color={COLORS.brown} />
-                    </View>
-                  </Pressable>
-                  {item.tag ? (
-                    <View style={{ position: "absolute", top: 10, left: 10, backgroundColor: item.tag === "Hot Pick" ? "#E53935" : item.tag === "Veggie" ? "#2E7D32" : "#43A047", borderRadius: 8, paddingHorizontal: 8, paddingVertical: 3 }}>
-                      <Text style={{ fontSize: 9, fontWeight: "700", color: COLORS.white }}>{item.tag}</Text>
-                    </View>
-                  ) : null}
-                </View>
-                <View style={{ padding: 10 }}>
-                  <Text
-                    style={{
-                      fontSize: 13,
-                      fontFamily: "BricolageGrotesque_700Bold",
-                      color: COLORS.brown,
-                      marginBottom: 4,
-                    }}
-                    numberOfLines={1}
-                  >
-                    {item.name}
-                  </Text>
-                  <Text style={{ fontSize: 14, fontWeight: "800", color: COLORS.brown }}>
-                    {item.price}
-                  </Text>
-                </View>
-              </Pressable>
-            ))}
-          </View>
-        </View>
-
-        {/* ─── 7. PRODUCTS GRID ─── */}
-        <View style={{ paddingHorizontal: PADDING, marginBottom: 20 }}>
-          <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontFamily: "BricolageGrotesque_700Bold",
-                color: COLORS.brown,
-              }}
-            >
-              All Products
-            </Text>
-            <Pressable onPress={() => router.push("/(tabs)/menu")}>
-              <Text style={{ fontSize: 13, color: COLORS.neutral, fontWeight: "500" }}>See All</Text>
-            </Pressable>
-          </View>
-          <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 14 }}>
-            {filteredByCategory.map((item) => (
               <Pressable
                 key={item.id}
                 onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description || "", tag: item.tag || "", category: item.category } })}
