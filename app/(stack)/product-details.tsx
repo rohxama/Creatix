@@ -26,7 +26,6 @@ const COLORS = {
   border: "#ddd0c0",
   neutral: "#7a6e63",
   neutralLight: "#a89e93",
-  darkBg: "#2c1a0e",
 };
 
 const IMAGES: Record<string, any> = {
@@ -79,7 +78,7 @@ export default function ProductDetailsScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.darkBg }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
       {/* Header */}
       <View

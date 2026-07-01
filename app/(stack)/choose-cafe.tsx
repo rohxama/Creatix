@@ -23,7 +23,6 @@ const COLORS = {
   neutral: "#7a6e63",
   neutralLight: "#a89e93",
   sage: "#6b8f71",
-  darkBg: "#2c1a0e",
 };
 
 const initialAddresses = [
@@ -75,7 +74,7 @@ export default function ChooseCafeScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.darkBg }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
@@ -278,16 +277,18 @@ export default function ChooseCafeScreen() {
       </ScrollView>
 
       {/* Bottom Buttons */}
-      <View
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 16,
-          paddingBottom: Platform.OS === "ios" ? 36 : 24,
-          backgroundColor: COLORS.cream,
-          alignItems: "center",
-        }}
-      >
-        <View style={{ flexDirection: "row", gap: 12, maxWidth: 480, width: "100%" }}>
+      <View style={{ alignItems: "center", backgroundColor: COLORS.white }}>
+        <View
+          style={{
+            maxWidth: 480,
+            width: "100%",
+            paddingHorizontal: 20,
+            paddingVertical: 16,
+            paddingBottom: Platform.OS === "ios" ? 36 : 24,
+            flexDirection: "row",
+            gap: 12,
+          }}
+        >
           <Pressable
             onPress={handleSave}
             style={{
@@ -308,11 +309,11 @@ export default function ChooseCafeScreen() {
               paddingVertical: 14,
               borderRadius: 14,
               backgroundColor: COLORS.brown,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.white }}>Continue</Text>
-        </Pressable>
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.white }}>Continue</Text>
+          </Pressable>
         </View>
       </View>
     </View>

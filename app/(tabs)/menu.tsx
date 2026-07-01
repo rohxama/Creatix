@@ -92,7 +92,7 @@ export default function MenuTab() {
   const filtered = allProducts.filter((i) => i.category === activeCategory);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

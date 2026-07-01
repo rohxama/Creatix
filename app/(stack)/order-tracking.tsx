@@ -72,7 +72,7 @@ export default function OrderTrackingScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View
         style={{
           paddingTop: insets.top + 16,

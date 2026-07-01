@@ -50,7 +50,7 @@ export default function CartTab() {
   // ─── ORDER SUMMARY VIEW ───
   if (view === "summary") {
     return (
-      <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+      <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -202,7 +202,7 @@ export default function CartTab() {
 
   // ─── CART VIEW ───
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

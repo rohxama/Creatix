@@ -30,7 +30,7 @@ export default function OrderSummaryScreen() {
   const [orderType, setOrderType] = useState<"delivery" | "pickup">("delivery");
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <View
         style={{
           paddingTop: insets.top + 16,

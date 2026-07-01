@@ -71,7 +71,7 @@ export default function ProfileTab() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

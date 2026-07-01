@@ -56,7 +56,7 @@ export default function CartFlowScreen() {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.qty, 0);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <View
         style={{
           paddingTop: insets.top + 16,
