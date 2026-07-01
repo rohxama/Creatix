@@ -52,22 +52,40 @@ export default function ProfileTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 60 : 48,
+          paddingTop: Platform.OS === "ios" ? 16 : 12,
           paddingHorizontal: 20,
           paddingBottom: 40,
         }}
       >
-        <Text
-          style={{
-            fontSize: 28,
-            fontFamily: "Pacifico_400Regular",
-            color: COLORS.brown,
-            textAlign: "center",
-            marginBottom: 24,
-          }}
-        >
-          Creatix
-        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontFamily: "Pacifico_400Regular",
+              color: COLORS.brown,
+            }}
+          >
+            Creatix
+          </Text>
+          <Image
+            source={require("../../assets/logo.png")}
+            style={{ width: 50, height: 50 }}
+            resizeMode="contain"
+          />
+          <Pressable
+            onPress={() => router.push("/(stack)/notifications")}
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              backgroundColor: COLORS.coffeeBg,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Bell size={18} color={COLORS.brown} />
+          </Pressable>
+        </View>
 
         <View style={{ alignItems: "center", marginBottom: 28 }}>
           <View
