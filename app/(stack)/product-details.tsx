@@ -10,8 +10,9 @@ import {
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
+import { useCart } from "@/context/CartContext";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -42,8 +43,11 @@ const INGREDIENTS: Record<string, string[]> = {
   brunch: ["Eggs", "Avocado", "Sourdough", "Bacon", "Tomato", "Herbs"],
 };
 
+const IMAGE_SIZE = SCREEN_HEIGHT < 700 ? 240 : SCREEN_HEIGHT < 800 ? 280 : SCREEN_HEIGHT < 900 ? 320 : 500;
+
 export default function ProductDetailsScreen() {
   const router = useRouter();
+  const { addToCart } = useCart();
   const params = useLocalSearchParams<{
     id?: string;
     name?: string;
@@ -78,7 +82,7 @@ export default function ProductDetailsScreen() {
       {/* Header */}
       <View
         style={{
-          paddingTop: Platform.OS === "ios" ? 56 : 22,
+          paddingTop: Platform.OS === "ios" ? 60 : 40,
           paddingHorizontal: 20,
         }}
       >
@@ -87,56 +91,59 @@ export default function ProductDetailsScreen() {
         </Pressable>
       </View>
 
-      {/* Product Name - Centered */}
-      <View style={{ alignItems: "center", marginTop: 8, paddingHorizontal: 20 }}>
-        <Text
-          style={{
-            fontSize: 32,
-            fontFamily: "Pacifico_400Regular",
-            color: COLORS.brown,
-            letterSpacing: -0.3,
-            textAlign: "center",
-          }}
-        >
-          {name}
-        </Text>
-        {description ? (
+      {/* Content */}
+      <View style={{ flex: 1, paddingHorizontal: 20 }}>
+        {/* Product Name */}
+        <View style={{ alignItems: "center", marginTop: 8 }}>
           <Text
             style={{
-              fontSize: 13,
-              color: COLORS.neutral,
-              lineHeight: 18,
+              fontSize: 30,
+              fontFamily: "Pacifico_400Regular",
+              color: COLORS.brown,
+              letterSpacing: -0.3,
               textAlign: "center",
-              marginTop: 6,
             }}
           >
-            {description}
+            {name}
           </Text>
-        ) : null}
+          {description ? (
+            <Text
+              style={{
+                fontSize: 13,
+                color: COLORS.neutral,
+                lineHeight: 18,
+                textAlign: "center",
+                marginTop: 6,
+              }}
+            >
+              {description}
+            </Text>
+          ) : null}
+        </View>
+
+        {/* Product Image - Floating */}
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+          <Animated.View style={{ transform: [{ translateY: floatAnim }] }}>
+            <Image
+              source={image}
+              style={{ width: IMAGE_SIZE, height: IMAGE_SIZE }}
+              resizeMode="contain"
+            />
+          </Animated.View>
+        </View>
+
+        {/* Ingredients List */}
+        <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 12, marginBottom: 16 }}>
+          {ingredients.map((item, idx) => (
+            <View key={idx} style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+              <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: COLORS.brown }} />
+              <Text style={{ fontSize: 13, color: COLORS.brown, fontWeight: "600" }}>{item}</Text>
+            </View>
+          ))}
+        </View>
       </View>
 
-      {/* Product Image - Floating */}
-      <View style={{ alignItems: "center", justifyContent: "center", marginTop: 10 }}>
-        <Animated.View style={{ transform: [{ translateY: floatAnim }] }}>
-          <Image
-            source={image}
-            style={{ width: 400, height: 340 }}
-            resizeMode="contain"
-          />
-        </Animated.View>
-      </View>
-
-      {/* Ingredients List */}
-      <View style={{ flexDirection: "row", flexWrap: "wrap", justifyContent: "center", gap: 12, paddingHorizontal: 30, marginTop: 10, marginBottom: 10 }}>
-        {ingredients.map((item, idx) => (
-          <View key={idx} style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: COLORS.brown }} />
-            <Text style={{ fontSize: 13, color: COLORS.brown, fontWeight: "600" }}>{item}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Bottom Actions */}
+      {/* Bottom Actions - Fixed at bottom */}
       <View
         style={{
           paddingHorizontal: 20,
@@ -144,7 +151,10 @@ export default function ProductDetailsScreen() {
         }}
       >
         <Pressable
-          onPress={() => router.push("/(stack)/cart-flow")}
+          onPress={() => {
+            addToCart({ id: params.id || "1", name, price, category });
+            router.push("/(tabs)/cart");
+          }}
           style={{
             backgroundColor: COLORS.brown,
             paddingVertical: 16,
