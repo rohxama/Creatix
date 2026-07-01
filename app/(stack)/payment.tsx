@@ -45,18 +45,20 @@ export default function PaymentScreen() {
             marginBottom: 24,
           }}
         >
-          <Pressable onPress={() => router.back()} style={{ marginBottom: 8 }}>
-            <ArrowLeft size={24} color={COLORS.brown} />
-          </Pressable>
-          <Text
-            style={{
-              fontSize: 22,
-              fontFamily: "BricolageGrotesque_700Bold",
-              color: COLORS.brown,
-            }}
-          >
-            Payment
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", position: "relative" }}>
+            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 0 }}>
+              <ArrowLeft size={24} color={COLORS.brown} />
+            </Pressable>
+            <Text
+              style={{
+                fontSize: 18,
+                fontFamily: "BricolageGrotesque_700Bold",
+                color: COLORS.brown,
+              }}
+            >
+              Payment
+            </Text>
+          </View>
         </View>
 
         <View style={{ paddingHorizontal: 20, gap: 10, marginBottom: 24 }}>
@@ -136,35 +138,6 @@ export default function PaymentScreen() {
           </View>
         )}
       </ScrollView>
-
-      <View
-        style={{
-          paddingHorizontal: 20,
-          paddingVertical: 16,
-          paddingBottom: Platform.OS === "ios" ? 36 : 24,
-          backgroundColor: COLORS.cream,
-        }}
-      >
-        <Pressable
-          onPress={() => router.push("/(stack)/review-order")}
-          style={{
-            backgroundColor: COLORS.brown,
-            paddingVertical: 16,
-            borderRadius: 14,
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "BricolageGrotesque_700Bold",
-              color: COLORS.white,
-            }}
-          >
-            Place Order
-          </Text>
-        </Pressable>
-      </View>
     </View>
   );
 }
