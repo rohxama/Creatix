@@ -79,7 +79,7 @@ export default function ProductDetailsScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
-      <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
+      <View style={{ flex: 1, maxWidth: 480, alignSelf: "center", width: "100%" }}>
       {/* Header */}
       <View
         style={{
