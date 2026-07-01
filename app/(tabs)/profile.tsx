@@ -33,7 +33,7 @@ export default function ProfileTab() {
   const handlePress = (label: string) => {
     switch (label) {
       case "Account Details":
-        setShowNameModal(true);
+        router.push("/(stack)/account-details");
         break;
       case "Payment Methods":
         router.push("/(stack)/payment");
@@ -42,13 +42,13 @@ export default function ProfileTab() {
         router.push("/(tabs)/orders");
         break;
       case "Notification Settings":
-        router.push("/(stack)/notifications");
+        router.push("/(stack)/notification-settings");
         break;
       case "Help Center":
-        Alert.alert("Help Center", "Contact us at support@crea.com");
+        router.push("/(stack)/help-center");
         break;
       case "Terms & Conditions":
-        Alert.alert("Terms & Conditions", "By using Creatix Cafe, you agree to our terms of service.");
+        router.push("/(stack)/terms-conditions");
         break;
     }
   };
