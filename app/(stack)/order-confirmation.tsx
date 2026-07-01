@@ -32,6 +32,7 @@ export default function OrderConfirmationScreen() {
         paddingHorizontal: 32,
       }}
     >
+      <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
       <View
         style={{
           width: 100,
@@ -118,6 +119,7 @@ export default function OrderConfirmationScreen() {
           Back to Home
         </Text>
       </Pressable>
+      </View>
     </View>
   );
 }

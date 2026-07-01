@@ -33,6 +33,7 @@ export default function RateReviewScreen() {
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+      <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
       <View
         style={{
           width: "100%",
@@ -171,6 +172,7 @@ export default function RateReviewScreen() {
             Skip now &gt;
           </Text>
         </Pressable>
+      </View>
       </View>
     </View>
   );

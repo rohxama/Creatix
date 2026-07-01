@@ -52,6 +52,7 @@ export default function SignInScreen() {
           paddingBottom: 40,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Text
           style={{
             fontSize: 40,
@@ -171,6 +172,7 @@ export default function SignInScreen() {
             </Text>
           </Text>
         </Pressable>
+        </View>
       </ScrollView>
     </View>
   );

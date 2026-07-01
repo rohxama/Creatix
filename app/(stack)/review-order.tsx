@@ -35,6 +35,7 @@ export default function ReviewOrderScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View
           style={{
             paddingTop: insets.top + 16,
@@ -130,6 +131,7 @@ export default function ReviewOrderScreen() {
               <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>$13.90</Text>
             </View>
           </View>
+        </View>
         </View>
       </ScrollView>
 

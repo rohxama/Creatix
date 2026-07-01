@@ -103,6 +103,7 @@ export default function OrderTrackingScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Text
           style={{
             fontSize: 14,
@@ -312,6 +313,7 @@ export default function OrderTrackingScreen() {
             CUSTOMER SERVICE
           </Text>
         </Pressable>
+        </View>
       </ScrollView>
     </View>
   );

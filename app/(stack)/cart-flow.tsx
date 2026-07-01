@@ -88,6 +88,7 @@ export default function CartFlowScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         {items.map((item) => (
           <View
             key={item.id}
@@ -233,6 +234,7 @@ export default function CartFlowScreen() {
             <Text style={{ fontSize: 13, color: COLORS.neutral }}>Delivery</Text>
             <Text style={{ fontSize: 13, fontWeight: "700", color: COLORS.sage }}>Free</Text>
           </View>
+        </View>
         </View>
       </ScrollView>
 

@@ -77,6 +77,7 @@ export default function NotificationSettingsScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 40 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View
           style={{
             paddingTop: insets.top + 16,
@@ -153,6 +154,7 @@ export default function NotificationSettingsScreen() {
               </View>
             ))}
           </View>
+        </View>
         </View>
       </ScrollView>
     </View>

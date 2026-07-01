@@ -101,6 +101,7 @@ export default function MenuTab() {
           paddingBottom: 20,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
           <Text
             style={{
@@ -320,6 +321,7 @@ export default function MenuTab() {
               </Pressable>
             );
           })}
+        </View>
         </View>
       </ScrollView>
     </View>

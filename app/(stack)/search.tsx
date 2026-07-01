@@ -111,6 +111,7 @@ export default function SearchScreen() {
           paddingBottom: 40,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <Pressable onPress={() => router.back()}>
             <ArrowLeft size={24} color={COLORS.brown} />
@@ -206,6 +207,7 @@ export default function SearchScreen() {
             })}
           </View>
         )}
+        </View>
       </ScrollView>
     </View>
   );

@@ -53,12 +53,13 @@ export default function CartTab() {
       <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
+        contentContainerStyle={{
             paddingTop: insets.top + 16,
             paddingHorizontal: 20,
             paddingBottom: 80,
           }}
-      >
+        >
+          <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
           {/* Header */}
           <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginBottom: 20, position: "relative" }}>
             <Pressable onPress={() => setView("cart")} style={{ position: "absolute", left: 0 }}>
@@ -193,6 +194,7 @@ export default function CartTab() {
             <Text style={{ fontSize: 15, color: COLORS.white }}>·</Text>
             <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>${total.toFixed(2)}</Text>
           </Pressable>
+          </View>
         </ScrollView>
       </View>
     );
@@ -204,11 +206,12 @@ export default function CartTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: insets.top + 16,
-          paddingHorizontal: 20,
-          paddingBottom: 20,
-        }}
-      >
+            paddingTop: insets.top + 16,
+            paddingHorizontal: 20,
+            paddingBottom: 20,
+          }}
+        >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         {/* Header */}
         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", marginBottom: 16, position: "relative" }}>
           <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 0 }}>
@@ -313,6 +316,7 @@ export default function CartTab() {
             </Pressable>
           </>
         )}
+        </View>
       </ScrollView>
     </View>
   );

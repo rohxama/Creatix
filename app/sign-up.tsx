@@ -39,6 +39,7 @@ export default function SignUpScreen() {
           paddingBottom: 40,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Text
           style={{
             fontSize: 40,
@@ -158,6 +159,7 @@ export default function SignUpScreen() {
             </Text>
           </Text>
         </Pressable>
+        </View>
       </ScrollView>
     </View>
   );

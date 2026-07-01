@@ -62,6 +62,7 @@ export default function OrderSummaryScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 20 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Text
           style={{
             fontSize: 14,
@@ -244,6 +245,7 @@ export default function OrderSummaryScreen() {
           <Pressable>
             <Text style={{ fontSize: 13, fontWeight: "700", color: COLORS.brown }}>Change</Text>
           </Pressable>
+        </View>
         </View>
       </ScrollView>
 

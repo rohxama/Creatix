@@ -215,6 +215,7 @@ export function HomeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 100 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         {/* ─── 1. HEADER: Location + Bell ─── */}
         <View
           style={{
@@ -578,6 +579,7 @@ export function HomeScreen() {
               </Pressable>
             ))}
           </View>
+        </View>
         </View>
       </ScrollView>
     </View>

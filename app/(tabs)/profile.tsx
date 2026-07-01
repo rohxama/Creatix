@@ -80,6 +80,7 @@ export default function ProfileTab() {
           paddingBottom: 40,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View style={{ alignItems: "center", marginBottom: 28 }}>
           <View style={{ position: "relative", marginBottom: 12 }}>
             <View
@@ -239,6 +240,7 @@ export default function ProfileTab() {
             Log Out
           </Text>
         </Pressable>
+        </View>
       </ScrollView>
 
       <Modal visible={showNameModal} transparent animationType="fade">

@@ -79,6 +79,7 @@ export default function ChooseCafeScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View
           style={{
             paddingTop: insets.top + 16,
@@ -271,6 +272,7 @@ export default function ChooseCafeScreen() {
               <Text style={{ fontSize: 14, fontWeight: "600", color: COLORS.brown }}>Add new address</Text>
             </Pressable>
           )}
+        </View>
         </View>
       </ScrollView>
 

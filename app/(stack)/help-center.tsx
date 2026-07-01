@@ -59,6 +59,7 @@ export default function HelpCenterScreen() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 40 }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <View
           style={{
             paddingTop: insets.top + 16,
@@ -199,6 +200,7 @@ export default function HelpCenterScreen() {
               </View>
             </View>
           </View>
+        </View>
         </View>
       </ScrollView>
     </View>

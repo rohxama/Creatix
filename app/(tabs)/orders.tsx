@@ -50,6 +50,7 @@ export default function OrdersTab() {
           paddingBottom: 20,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Text
           style={{
             fontSize: 22,
@@ -149,6 +150,7 @@ export default function OrdersTab() {
             </View>
           </Pressable>
         ))}
+        </View>
       </ScrollView>
     </View>
   );
