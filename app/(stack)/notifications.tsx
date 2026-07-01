@@ -7,7 +7,7 @@ import {
   Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ArrowLeft, Bell, Coffee, ShoppingBag, Tag } from "lucide-react-native";
+import { ArrowLeft, Coffee, ShoppingBag, Tag } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",

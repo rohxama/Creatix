@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ChevronRight, CreditCard, Bell, HelpCircle, FileText, LogOut } from "lucide-react-native";
+import { ChevronRight, Bell, LogOut } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",

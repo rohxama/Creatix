@@ -5,11 +5,10 @@ import {
   Pressable,
   ScrollView,
   Platform,
-  TextInput,
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Minus, Plus, Trash2, Bell, ChevronLeft, MapPin, CreditCard, Truck, Store, ArrowLeft } from "lucide-react-native";
+import { Minus, Plus, Trash2, MapPin, CreditCard, Truck, Store, ArrowLeft } from "lucide-react-native";
 import { useCart } from "@/context/CartContext";
 
 const COLORS = {
@@ -53,9 +52,9 @@ export default function CartTab() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingTop: Platform.OS === "ios" ? 16 : 12,
+            paddingTop: Platform.OS === "ios" ? 56 : 44,
             paddingHorizontal: 20,
-            paddingBottom: 40,
+            paddingBottom: 80,
           }}
       >
           {/* Header */}
@@ -66,7 +65,7 @@ export default function CartTab() {
           </View>
 
           {/* Cart Items Summary */}
-          <View style={{ backgroundColor: COLORS.warmWhite, borderRadius: 16, borderWidth: 1, borderColor: COLORS.border, padding: 14, marginBottom: 20 }}>
+          <View style={{ backgroundColor: COLORS.warmWhite, borderRadius: 16, borderWidth: 1, borderColor: COLORS.border, padding: 14, marginBottom: 20,marginTop: 20 }}>
             {cart.map((item) => {
               const image = IMAGES[item.category] || IMAGES.coffee;
               return (

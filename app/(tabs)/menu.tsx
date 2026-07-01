@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { Search, Plus, Heart, Bell } from "lucide-react-native";
+import { Search, Heart, Bell } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",

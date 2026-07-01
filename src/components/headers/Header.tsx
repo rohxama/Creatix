@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Pressable } from "react-native";
 import { Text } from "@/components/ui/Text";
-import { cn } from "@/utils/cn";
+
 
 interface HeaderProps {
   title: string;

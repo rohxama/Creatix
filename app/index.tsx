@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   Dimensions,
-  Platform,
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";

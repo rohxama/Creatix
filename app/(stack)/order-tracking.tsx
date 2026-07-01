@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ArrowLeft, Check, Phone, MessageCircle } from "lucide-react-native";
+import { ArrowLeft, Check } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",

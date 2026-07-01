@@ -21,8 +21,6 @@ import Animated, {
 import { useRouter } from "expo-router";
 import {
   Search,
-  User,
-  Plus,
   SlidersHorizontal,
   Coffee,
   CupSoda,

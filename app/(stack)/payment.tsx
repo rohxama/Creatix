@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ArrowLeft, CreditCard } from "lucide-react-native";
+import { ArrowLeft } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",
