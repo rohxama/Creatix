@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useCustomFonts } from "@/hooks/useFonts";
 import { Loader } from "@/components/ui/Loader";
+import { CartProvider } from "@/context/CartContext";
 
 export default function RootLayout() {
   const { fontsLoaded } = useCustomFonts();
@@ -17,13 +18,15 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <StatusBar style="dark" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            animation: "slide_from_right",
-          }}
-        />
+        <CartProvider>
+          <StatusBar style="dark" />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              animation: "slide_from_right",
+            }}
+          />
+        </CartProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
