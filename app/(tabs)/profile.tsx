@@ -79,7 +79,7 @@ export default function ProfileTab() {
         }}
       >
         <View style={{ alignItems: "center", marginBottom: 28 }}>
-          <Pressable onPress={handleChangeImage}>
+          <View style={{ position: "relative", marginBottom: 12 }}>
             <View
               style={{
                 width: 80,
@@ -88,7 +88,6 @@ export default function ProfileTab() {
                 backgroundColor: COLORS.coffeeBg,
                 alignItems: "center",
                 justifyContent: "center",
-                marginBottom: 12,
               }}
             >
               <Image
@@ -99,14 +98,14 @@ export default function ProfileTab() {
             </View>
             <Pressable
               onPress={handleChangeImage}
-              hitSlop={10}
+              hitSlop={12}
               style={{
                 position: "absolute",
-                bottom: 8,
+                bottom: 0,
                 right: -4,
-                width: 26,
-                height: 26,
-                borderRadius: 13,
+                width: 28,
+                height: 28,
+                borderRadius: 14,
                 backgroundColor: COLORS.brown,
                 alignItems: "center",
                 justifyContent: "center",
@@ -116,7 +115,7 @@ export default function ProfileTab() {
             >
               <Camera size={12} color={COLORS.white} />
             </Pressable>
-          </Pressable>
+          </View>
           <Text
             style={{
               fontSize: 20,
