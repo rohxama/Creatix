@@ -23,6 +23,7 @@ const COLORS = {
   neutral: "#7a6e63",
   neutralLight: "#a89e93",
   sage: "#6b8f71",
+  darkBg: "#2c1a0e",
 };
 
 const initialAddresses = [
@@ -74,7 +75,7 @@ export default function ChooseCafeScreen() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.darkBg }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
@@ -283,35 +284,36 @@ export default function ChooseCafeScreen() {
           paddingVertical: 16,
           paddingBottom: Platform.OS === "ios" ? 36 : 24,
           backgroundColor: COLORS.cream,
-          flexDirection: "row",
-          gap: 12,
+          alignItems: "center",
         }}
       >
-        <Pressable
-          onPress={handleSave}
-          style={{
-            flex: 1,
-            paddingVertical: 14,
-            borderRadius: 14,
-            borderWidth: 1,
-            borderColor: COLORS.brown,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>Save</Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push("/(stack)/payment")}
-          style={{
-            flex: 1,
-            paddingVertical: 14,
-            borderRadius: 14,
-            backgroundColor: COLORS.brown,
+        <View style={{ flexDirection: "row", gap: 12, maxWidth: 480, width: "100%" }}>
+          <Pressable
+            onPress={handleSave}
+            style={{
+              flex: 1,
+              paddingVertical: 14,
+              borderRadius: 14,
+              borderWidth: 1,
+              borderColor: COLORS.brown,
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>Save</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/(stack)/payment")}
+            style={{
+              flex: 1,
+              paddingVertical: 14,
+              borderRadius: 14,
+              backgroundColor: COLORS.brown,
             alignItems: "center",
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.white }}>Continue</Text>
         </Pressable>
+        </View>
       </View>
     </View>
   );
