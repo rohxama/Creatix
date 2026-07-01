@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -41,7 +41,7 @@ function formatDate(date: Date) {
 
 export default function OrderTrackingScreen() {
   const router = useRouter();
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
 
   const now = new Date();
   const orderTime = new Date(now.getTime());
@@ -64,6 +64,10 @@ export default function OrderTrackingScreen() {
   }, 0);
 
   const orderNumber = String(Math.floor(100 + Math.random() * 900));
+
+  useEffect(() => {
+    clearCart();
+  }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>

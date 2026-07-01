@@ -8,7 +8,6 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { Bell } from "lucide-react-native";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -49,36 +48,6 @@ export default function OrdersTab() {
           paddingBottom: 20,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 16 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "Pacifico_400Regular",
-              color: COLORS.brown,
-            }}
-          >
-            Creatix
-          </Text>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={{ width: 50, height: 50 }}
-            resizeMode="contain"
-          />
-          <Pressable
-            onPress={() => router.push("/(stack)/notifications")}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: COLORS.coffeeBg,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Bell size={18} color={COLORS.brown} />
-          </Pressable>
-        </View>
-
         <Text
           style={{
             fontSize: 22,
