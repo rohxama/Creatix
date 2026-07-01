@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Check } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCart } from "@/context/CartContext";
 
 const COLORS = {
@@ -40,6 +41,7 @@ function formatDate(date: Date) {
 }
 
 export default function OrderTrackingScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { cart, clearCart } = useCart();
 
@@ -73,11 +75,10 @@ export default function OrderTrackingScreen() {
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View
         style={{
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           flexDirection: "row",
           alignItems: "center",
-          gap: 10,
           marginBottom: 16,
         }}
       >
@@ -86,14 +87,16 @@ export default function OrderTrackingScreen() {
         </Pressable>
         <Text
           style={{
+            flex: 1,
+            textAlign: "center",
             fontSize: 16,
             fontFamily: "BricolageGrotesque_700Bold",
             color: COLORS.brown,
-            flex: 1,
           }}
         >
           Tracking: Order № {orderNumber}
         </Text>
+        <View style={{ width: 24 }} />
       </View>
 
       <ScrollView

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Heart, Trash2, Minus, Plus } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -32,6 +33,7 @@ interface CartItem {
 }
 
 export default function CartFlowScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [items, setItems] = useState<CartItem[]>([
     { id: "1", name: "Cappuccino", price: 4.90, qty: 2 },
@@ -57,7 +59,7 @@ export default function CartFlowScreen() {
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View
         style={{
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           flexDirection: "row",
           alignItems: "center",
@@ -170,9 +172,9 @@ export default function CartFlowScreen() {
               <Pressable
                 onPress={() => updateQty(item.id, -1)}
                 style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 8,
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
                   backgroundColor: COLORS.coffeeBg,
                   alignItems: "center",
                   justifyContent: "center",
@@ -186,9 +188,9 @@ export default function CartFlowScreen() {
               <Pressable
                 onPress={() => updateQty(item.id, 1)}
                 style={{
-                  width: 28,
-                  height: 28,
-                  borderRadius: 8,
+                  width: 44,
+                  height: 44,
+                  borderRadius: 22,
                   backgroundColor: COLORS.brown,
                   alignItems: "center",
                   justifyContent: "center",

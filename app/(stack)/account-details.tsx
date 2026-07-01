@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, User, Mail, Phone, MapPin, Save } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -23,9 +24,10 @@ const COLORS = {
 };
 
 export default function AccountDetailsScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [name, setName] = useState("Jasnet Sharma");
-  const [email, setEmail] = useState("jasnet@crea.com");
+  const [name, setName] = useState("Roma");
+  const [email, setEmail] = useState("rohxama@gmail.com");
   const [phone, setPhone] = useState("+1 234 567 890");
   const [address, setAddress] = useState("308 Caterina Ranch");
 
@@ -41,17 +43,19 @@ export default function AccountDetailsScreen() {
       >
         <View
           style={{
-            paddingTop: Platform.OS === "ios" ? 56 : 44,
+            paddingTop: insets.top + 16,
             paddingHorizontal: 20,
             marginBottom: 24,
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", position: "relative" }}>
-            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 0 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Pressable onPress={() => router.back()}>
               <ArrowLeft size={24} color={COLORS.brown} />
             </Pressable>
             <Text
               style={{
+                flex: 1,
+                textAlign: "center",
                 fontSize: 18,
                 fontFamily: "BricolageGrotesque_700Bold",
                 color: COLORS.brown,
@@ -59,6 +63,7 @@ export default function AccountDetailsScreen() {
             >
               Account Details
             </Text>
+            <View style={{ width: 24 }} />
           </View>
         </View>
 

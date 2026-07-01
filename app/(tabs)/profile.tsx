@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ChevronRight, LogOut, Camera, X } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -25,8 +26,9 @@ const COLORS = {
 };
 
 export default function ProfileTab() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
-  const [name, setName] = useState("Jasnet Sharma");
+  const [name, setName] = useState("Roma");
   const [showNameModal, setShowNameModal] = useState(false);
   const [editName, setEditName] = useState(name);
 
@@ -73,7 +75,7 @@ export default function ProfileTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 72 : 60,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           paddingBottom: 40,
         }}
@@ -103,9 +105,9 @@ export default function ProfileTab() {
                 position: "absolute",
                 bottom: 0,
                 right: -4,
-                width: 28,
-                height: 28,
-                borderRadius: 14,
+                width: 44,
+                height: 44,
+                borderRadius: 22,
                 backgroundColor: COLORS.brown,
                 alignItems: "center",
                 justifyContent: "center",

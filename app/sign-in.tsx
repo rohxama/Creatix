@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -22,6 +23,7 @@ const COLORS = {
 };
 
 export default function SignInScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +48,7 @@ export default function SignInScreen() {
         contentContainerStyle={{
           flexGrow: 1,
           paddingHorizontal: 28,
-          paddingTop: Platform.OS === "ios" ? 80 : 60,
+          paddingTop: insets.top + 16,
           paddingBottom: 40,
         }}
       >
@@ -136,6 +138,7 @@ export default function SignInScreen() {
         <Pressable
           onPress={() => router.push("/(tabs)")}
           style={{
+            width: "100%",
             backgroundColor: COLORS.brown,
             paddingVertical: 16,
             borderRadius: 14,

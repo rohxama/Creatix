@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Star } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -25,6 +26,7 @@ const COLORS = {
 };
 
 export default function RateReviewScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [rating, setRating] = useState(5);
   const [feedback, setFeedback] = useState("");
@@ -38,7 +40,7 @@ export default function RateReviewScreen() {
           backgroundColor: COLORS.brown,
           alignItems: "center",
           justifyContent: "center",
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
         }}
       >
         <Text

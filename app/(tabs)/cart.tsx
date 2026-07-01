@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Minus, Plus, Trash2, MapPin, CreditCard, Truck, Store, ArrowLeft } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useCart } from "@/context/CartContext";
 
 const COLORS = {
@@ -33,6 +34,7 @@ const IMAGES: Record<string, any> = {
 };
 
 export default function CartTab() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { cart, removeFromCart, updateQty } = useCart();
   const [view, setView] = useState<"cart" | "summary">("cart");
@@ -52,7 +54,7 @@ export default function CartTab() {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingTop: Platform.OS === "ios" ? 56 : 44,
+            paddingTop: insets.top + 16,
             paddingHorizontal: 20,
             paddingBottom: 80,
           }}
@@ -202,7 +204,7 @@ export default function CartTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           paddingBottom: 20,
         }}
@@ -258,14 +260,14 @@ export default function CartTab() {
                   <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     <Pressable
                       onPress={() => updateQty(item.id, -1)}
-                      style={{ width: 30, height: 30, borderRadius: 8, backgroundColor: COLORS.coffeeBg, alignItems: "center", justifyContent: "center" }}
+                      style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.coffeeBg, alignItems: "center", justifyContent: "center" }}
                     >
                       <Minus size={14} color={COLORS.brown} />
                     </Pressable>
                     <Text style={{ fontSize: 15, fontWeight: "700", color: COLORS.brown }}>{item.qty}</Text>
                     <Pressable
                       onPress={() => updateQty(item.id, 1)}
-                      style={{ width: 30, height: 30, borderRadius: 8, backgroundColor: COLORS.brown, alignItems: "center", justifyContent: "center" }}
+                      style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.brown, alignItems: "center", justifyContent: "center" }}
                     >
                       <Plus size={14} color={COLORS.white} />
                     </Pressable>

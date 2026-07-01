@@ -5,14 +5,13 @@ import {
   Pressable,
   Platform,
   Image,
-  Dimensions,
+  useWindowDimensions,
   Animated,
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { useCart } from "@/context/CartContext";
-
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -43,11 +42,12 @@ const INGREDIENTS: Record<string, string[]> = {
   brunch: ["Eggs", "Avocado", "Sourdough", "Bacon", "Tomato", "Herbs"],
 };
 
-const IMAGE_SIZE = SCREEN_HEIGHT < 700 ? 240 : SCREEN_HEIGHT < 800 ? 280 : SCREEN_HEIGHT < 900 ? 320 : 500;
-
 export default function ProductDetailsScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { addToCart } = useCart();
+  const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
+  const IMAGE_SIZE = SCREEN_HEIGHT < 700 ? 240 : SCREEN_HEIGHT < 800 ? 280 : SCREEN_HEIGHT < 900 ? 320 : 500;
   const params = useLocalSearchParams<{
     id?: string;
     name?: string;
@@ -82,7 +82,7 @@ export default function ProductDetailsScreen() {
       {/* Header */}
       <View
         style={{
-          paddingTop: Platform.OS === "ios" ? 60 : 40,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
         }}
       >

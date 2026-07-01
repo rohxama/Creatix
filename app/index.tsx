@@ -3,12 +3,10 @@ import {
   View,
   Text,
   Pressable,
-  Dimensions,
+  useWindowDimensions,
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
-
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -24,6 +22,9 @@ const COLORS = {
 
 export default function WelcomeScreen() {
   const router = useRouter();
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const imageSize = Math.min(SCREEN_WIDTH - 80, 280);
+  const headingSize = SCREEN_WIDTH < 350 ? 52 : 70;
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
@@ -35,11 +36,10 @@ export default function WelcomeScreen() {
           paddingHorizontal: 20,
         }}
       >
-        
 
         <Text
           style={{
-            fontSize: 70,
+            fontSize: headingSize,
             fontFamily: "Pacifico_400Regular",
             color: COLORS.brown,
             letterSpacing: -0.5,
@@ -61,8 +61,8 @@ export default function WelcomeScreen() {
         <Image
           source={require("../assets/home-banner-img.png")}
           style={{
-            width: 280,
-            height: 280,
+            width: imageSize,
+            height: imageSize,
             marginBottom: 1,
           }}
           resizeMode="contain"

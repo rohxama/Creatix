@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import { Search, Heart, Bell } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -75,6 +76,7 @@ const allProducts = [
 ];
 
 export default function MenuTab() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const params = useLocalSearchParams<{ category?: string }>();
   const [activeCategory, setActiveCategory] = useState(params.category || "coffee");
@@ -94,7 +96,7 @@ export default function MenuTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 16 : 12,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           paddingBottom: 20,
         }}
@@ -289,7 +291,7 @@ export default function MenuTab() {
                     style={{ position: "absolute", top: 10, right: 10 }}
                     onPress={() => {}}
                   >
-                    <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
+                    <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
                       <Heart size={14} color={COLORS.brown} />
                     </View>
                   </Pressable>

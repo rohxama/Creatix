@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -28,6 +29,7 @@ const paymentMethods = [
 ];
 
 export default function PaymentScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [selected, setSelected] = useState("card");
   const [upiId, setUpiId] = useState("");
@@ -40,17 +42,19 @@ export default function PaymentScreen() {
       >
         <View
           style={{
-            paddingTop: Platform.OS === "ios" ? 56 : 44,
+            paddingTop: insets.top + 16,
             paddingHorizontal: 20,
             marginBottom: 24,
           }}
         >
-          <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", position: "relative" }}>
-            <Pressable onPress={() => router.back()} style={{ position: "absolute", left: 0 }}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Pressable onPress={() => router.back()}>
               <ArrowLeft size={24} color={COLORS.brown} />
             </Pressable>
             <Text
               style={{
+                flex: 1,
+                textAlign: "center",
                 fontSize: 18,
                 fontFamily: "BricolageGrotesque_700Bold",
                 color: COLORS.brown,
@@ -58,6 +62,7 @@ export default function PaymentScreen() {
             >
               Payment
             </Text>
+            <View style={{ width: 24 }} />
           </View>
         </View>
 

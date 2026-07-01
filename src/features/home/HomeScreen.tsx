@@ -5,7 +5,7 @@ import {
   Text,
   Pressable,
   TextInput,
-  Dimensions,
+  useWindowDimensions,
   Platform,
   Image,
   NativeSyntheticEvent,
@@ -31,9 +31,7 @@ import {
   MapPin,
 } from "lucide-react-native";
 
-const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const PADDING = 20;
-const BANNER_WIDTH = SCREEN_WIDTH - PADDING * 2;
 const BANNER_IMAGES = [
   require("../../../assets/banner-img1.png"),
   require("../../../assets/banner-img2.png"),
@@ -116,6 +114,8 @@ function getGreeting(): string {
 
 export function HomeScreen() {
   const router = useRouter();
+  const { width: SCREEN_WIDTH } = useWindowDimensions();
+  const BANNER_WIDTH = SCREEN_WIDTH - PADDING * 2;
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("coffee");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -123,6 +123,33 @@ export function HomeScreen() {
   const bannerRef = useRef<any>(null);
   const [bannerIndex, setBannerIndex] = useState(0);
   const float = useSharedValue(0);
+  const [timer, setTimer] = useState({ hours: 2, minutes: 12, seconds: 56 });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => {
+        let { hours, minutes, seconds } = prev;
+        seconds -= 1;
+        if (seconds < 0) {
+          seconds = 59;
+          minutes -= 1;
+        }
+        if (minutes < 0) {
+          minutes = 59;
+          hours -= 1;
+        }
+        if (hours < 0) {
+          hours = 2;
+          minutes = 12;
+          seconds = 56;
+        }
+        return { hours, minutes, seconds };
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const pad = (n: number) => String(n).padStart(2, "0");
 
   useEffect(() => {
     Image.prefetch(require("../../../assets/mockup.png"));
@@ -461,7 +488,7 @@ export function HomeScreen() {
             <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
               <Text style={{ fontSize: 12, color: COLORS.neutral }}>Closing in:</Text>
               <View style={{ flexDirection: "row", gap: 4 }}>
-                {["02", "12", "56"].map((t, i) => (
+                {[pad(timer.hours), pad(timer.minutes), pad(timer.seconds)].map((t, i) => (
                   <React.Fragment key={i}>
                     <View style={{ backgroundColor: COLORS.cream, borderRadius: 6, paddingHorizontal: 6, paddingVertical: 3 }}>
                       <Text style={{ fontSize: 12, fontWeight: "700", color: COLORS.brown }}>{t}</Text>
@@ -522,7 +549,7 @@ export function HomeScreen() {
                     style={{ position: "absolute", top: 10, right: 10 }}
                     onPress={() => {}}
                   >
-                    <View style={{ width: 30, height: 30, borderRadius: 15, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
+                    <View style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: COLORS.white, alignItems: "center", justifyContent: "center" }}>
                       <Heart size={14} color={COLORS.brown} />
                     </View>
                   </Pressable>

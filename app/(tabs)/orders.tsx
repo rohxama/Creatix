@@ -8,6 +8,7 @@ import {
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -36,6 +37,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function OrdersTab() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
 
   return (
@@ -43,7 +45,7 @@ export default function OrdersTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           paddingBottom: 20,
         }}

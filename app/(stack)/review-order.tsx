@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -25,6 +26,7 @@ const orderItems = [
 ];
 
 export default function ReviewOrderScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
 
   return (
@@ -35,23 +37,28 @@ export default function ReviewOrderScreen() {
       >
         <View
           style={{
-            paddingTop: Platform.OS === "ios" ? 56 : 44,
+            paddingTop: insets.top + 16,
             paddingHorizontal: 20,
             marginBottom: 24,
           }}
         >
-          <Pressable onPress={() => router.back()} style={{ marginBottom: 8 }}>
-            <ArrowLeft size={24} color={COLORS.brown} />
-          </Pressable>
-          <Text
-            style={{
-              fontSize: 22,
-              fontFamily: "BricolageGrotesque_700Bold",
-              color: COLORS.brown,
-            }}
-          >
-            Review Order
-          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Pressable onPress={() => router.back()}>
+              <ArrowLeft size={24} color={COLORS.brown} />
+            </Pressable>
+            <Text
+              style={{
+                flex: 1,
+                textAlign: "center",
+                fontSize: 22,
+                fontFamily: "BricolageGrotesque_700Bold",
+                color: COLORS.brown,
+              }}
+            >
+              Review Order
+            </Text>
+            <View style={{ width: 24 }} />
+          </View>
         </View>
 
         <View style={{ paddingHorizontal: 20, marginBottom: 20 }}>

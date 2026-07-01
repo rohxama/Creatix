@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Coffee, ShoppingBag, Tag } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -29,6 +30,7 @@ const notifications = [
 ];
 
 export default function NotificationsScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
 
   return (
@@ -36,25 +38,27 @@ export default function NotificationsScreen() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 60 : 48,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           paddingBottom: 40,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12, marginBottom: 24 }}>
+        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 24 }}>
           <Pressable onPress={() => router.back()}>
             <ArrowLeft size={24} color={COLORS.brown} />
           </Pressable>
           <Text
             style={{
+              flex: 1,
+              textAlign: "center",
               fontSize: 20,
               fontFamily: "BricolageGrotesque_700Bold",
               color: COLORS.brown,
-              flex: 1,
             }}
           >
             Notifications
           </Text>
+          <View style={{ width: 24 }} />
         </View>
 
         {notifications.map((item) => (

@@ -7,6 +7,7 @@ import {
   ClipboardList,
   User,
 } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { ColorValue } from "react-native";
 
 function TabBarIcon({
@@ -29,6 +30,8 @@ function TabBarIcon({
 }
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tabs
       screenOptions={{
@@ -39,7 +42,8 @@ export default function TabLayout() {
           borderTopColor: "#f2e8d9",
           backgroundColor: "#ffffff",
           paddingTop: 6,
-          height: 88,
+          paddingBottom: Math.max(insets.bottom, 8),
+          height: 60 + Math.max(insets.bottom, 8),
         },
         tabBarLabelStyle: {
           fontSize: 11,

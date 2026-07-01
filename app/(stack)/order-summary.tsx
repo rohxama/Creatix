@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, MapPin, CreditCard, Store, Truck } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -24,6 +25,7 @@ const COLORS = {
 };
 
 export default function OrderSummaryScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const [orderType, setOrderType] = useState<"delivery" | "pickup">("delivery");
 
@@ -31,7 +33,7 @@ export default function OrderSummaryScreen() {
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View
         style={{
-          paddingTop: Platform.OS === "ios" ? 56 : 44,
+          paddingTop: insets.top + 16,
           paddingHorizontal: 20,
           flexDirection: "row",
           alignItems: "center",
