@@ -52,7 +52,7 @@ export default function ProfileTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 16 : 12,
+          paddingTop: Platform.OS === "ios" ? 56 : 44,
           paddingHorizontal: 20,
           paddingBottom: 40,
         }}
