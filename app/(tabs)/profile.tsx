@@ -6,6 +6,7 @@ import {
   ScrollView,
   Platform,
   Image,
+  Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ChevronRight, Bell, LogOut } from "lucide-react-native";
@@ -20,32 +21,31 @@ const COLORS = {
   neutral: "#7a6e63",
 };
 
-const menuSections = [
-  {
-    title: "Account",
-    items: [
-      { icon: "👤", label: "Account Details" },
-      { icon: "💳", label: "Payment Methods" },
-    ],
-  },
-  {
-    title: "Orders",
-    items: [
-      { icon: "📋", label: "Order History" },
-      { icon: "🔔", label: "Notification Settings" },
-    ],
-  },
-  {
-    title: "Preferences",
-    items: [
-      { icon: "❓", label: "Help Center" },
-      { icon: "📄", label: "Terms & Conditions" },
-    ],
-  },
-];
-
 export default function ProfileTab() {
   const router = useRouter();
+
+  const handlePress = (label: string) => {
+    switch (label) {
+      case "Account Details":
+        Alert.alert("Account Details", "Name: Jasnet Sharma\nEmail: jasnet@crea.com\nPhone: +1 234 567 890");
+        break;
+      case "Payment Methods":
+        router.push("/(stack)/payment");
+        break;
+      case "Order History":
+        router.push("/(tabs)/orders");
+        break;
+      case "Notification Settings":
+        router.push("/(stack)/notifications");
+        break;
+      case "Help Center":
+        Alert.alert("Help Center", "Contact us at support@crea.com");
+        break;
+      case "Terms & Conditions":
+        Alert.alert("Terms & Conditions", "By using Creatix Cafe, you agree to our terms of service.");
+        break;
+    }
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
@@ -57,36 +57,6 @@ export default function ProfileTab() {
           paddingBottom: 40,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "Pacifico_400Regular",
-              color: COLORS.brown,
-            }}
-          >
-            Creatix
-          </Text>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={{ width: 50, height: 50 }}
-            resizeMode="contain"
-          />
-          <Pressable
-            onPress={() => router.push("/(stack)/notifications")}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: COLORS.coffeeBg,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Bell size={18} color={COLORS.brown} />
-          </Pressable>
-        </View>
-
         <View style={{ alignItems: "center", marginBottom: 28 }}>
           <View
             style={{
@@ -116,7 +86,29 @@ export default function ProfileTab() {
           </Text>
         </View>
 
-        {menuSections.map((section) => (
+        {[
+          {
+            title: "Account",
+            items: [
+              { icon: "👤", label: "Account Details" },
+              { icon: "💳", label: "Payment Methods" },
+            ],
+          },
+          {
+            title: "Orders",
+            items: [
+              { icon: "📋", label: "Order History" },
+              { icon: "🔔", label: "Notification Settings" },
+            ],
+          },
+          {
+            title: "Preferences",
+            items: [
+              { icon: "❓", label: "Help Center" },
+              { icon: "📄", label: "Terms & Conditions" },
+            ],
+          },
+        ].map((section) => (
           <View key={section.title} style={{ marginBottom: 20 }}>
             <Text
               style={{
@@ -142,6 +134,7 @@ export default function ProfileTab() {
               {section.items.map((item, idx) => (
                 <Pressable
                   key={item.label}
+                  onPress={() => handlePress(item.label)}
                   style={{
                     flexDirection: "row",
                     alignItems: "center",
@@ -170,7 +163,7 @@ export default function ProfileTab() {
         ))}
 
         <Pressable
-          onPress={() => router.push("/")}
+          onPress={() => router.replace("/(tabs)")}
           style={{
             flexDirection: "row",
             alignItems: "center",
