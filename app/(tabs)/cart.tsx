@@ -63,7 +63,6 @@ export default function CartTab() {
             <Pressable onPress={() => setView("cart")} style={{ position: "absolute", left: 0 }}>
               <ArrowLeft size={24} color={COLORS.brown} />
             </Pressable>
-            <Text style={{ fontSize: 18, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.brown }}>My Cart</Text>
           </View>
 
           {/* Cart Items Summary */}
@@ -204,9 +203,7 @@ export default function CartTab() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: Platform.OS === "ios" ? 16 : 12,
-          paddingTop: Platform.OS === "ios" ? 16 : 12,
-          paddingTop: Platform.OS === "ios" ? 16 : 12,
+          paddingTop: Platform.OS === "ios" ? 56 : 44,
           paddingHorizontal: 20,
           paddingBottom: 20,
         }}
