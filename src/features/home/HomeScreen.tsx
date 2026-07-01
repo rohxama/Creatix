@@ -211,7 +211,7 @@ export function HomeScreen() {
             </View>
           </View>
           <Pressable
-            onPress={() => router.push("/(tabs)/profile")}
+            onPress={() => router.push("/(stack)/notifications")}
             style={{
               width: 44,
               height: 44,
@@ -279,6 +279,7 @@ export function HomeScreen() {
                       pathname: "/(stack)/search",
                       params: { query: searchText.trim() },
                     });
+                    setSearchText("");
                   }
                 }}
                 returnKeyType="search"
@@ -328,7 +329,7 @@ export function HomeScreen() {
                     <Pressable
                       key={item.id}
                       onPress={() => {
-                        setSearchText(item.name);
+                        setSearchText("");
                         setShowSuggestions(false);
                         router.push({ pathname: "/(stack)/search", params: { query: item.name } });
                       }}
@@ -373,7 +374,7 @@ export function HomeScreen() {
                 key={idx}
                 style={{
                   width: BANNER_WIDTH,
-                  height: 160,
+                  height: 180,
                   borderRadius: 18,
                   overflow: "hidden",
                 }}
@@ -411,7 +412,7 @@ export function HomeScreen() {
             {categories.map((cat) => (
               <Pressable
                 key={cat.id}
-                onPress={() => setActiveCategory(cat.id)}
+                onPress={() => router.push({ pathname: "/(tabs)/menu", params: { category: cat.id } })}
                 style={{
                   alignItems: "center",
                   gap: 8,
