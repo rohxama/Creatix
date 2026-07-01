@@ -97,7 +97,9 @@ export default function ProfileTab() {
                 resizeMode="contain"
               />
             </View>
-            <View
+            <Pressable
+              onPress={handleChangeImage}
+              hitSlop={10}
               style={{
                 position: "absolute",
                 bottom: 8,
@@ -113,7 +115,7 @@ export default function ProfileTab() {
               }}
             >
               <Camera size={12} color={COLORS.white} />
-            </View>
+            </Pressable>
           </Pressable>
           <Text
             style={{
