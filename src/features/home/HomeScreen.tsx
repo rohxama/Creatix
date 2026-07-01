@@ -115,7 +115,8 @@ function getGreeting(): string {
 export function HomeScreen() {
   const router = useRouter();
   const { width: SCREEN_WIDTH } = useWindowDimensions();
-  const BANNER_WIDTH = SCREEN_WIDTH - PADDING * 2;
+  const CONTENT_WIDTH = Math.min(SCREEN_WIDTH, 480);
+  const BANNER_WIDTH = CONTENT_WIDTH - PADDING * 2;
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("coffee");
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -442,7 +443,7 @@ export function HomeScreen() {
                 style={{
                   alignItems: "center",
                   gap: 8,
-                  width: (SCREEN_WIDTH - PADDING * 2 - 48) / 4,
+                  width: (CONTENT_WIDTH - PADDING * 2 - 48) / 4,
                 }}
               >
                 <View
@@ -534,7 +535,7 @@ export function HomeScreen() {
                 key={item.id}
                 onPress={() => router.push({ pathname: "/(stack)/product-details", params: { id: item.id, name: item.name, price: item.price, description: item.description || "", tag: item.tag || "", category: item.category } })}
                 style={{
-                  width: (SCREEN_WIDTH - PADDING * 2 - 14) / 2,
+                  width: (CONTENT_WIDTH - PADDING * 2 - 14) / 2,
                   backgroundColor: COLORS.cream,
                   borderRadius: 18,
                   overflow: "hidden",
