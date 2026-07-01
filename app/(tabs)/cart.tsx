@@ -164,7 +164,7 @@ export default function CartTab() {
 
           {/* Payment Method */}
           <Text style={{ fontSize: 13, color: COLORS.neutral, marginBottom: 10 }}>Payment Method</Text>
-          <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: COLORS.warmWhite, borderRadius: 14, borderWidth: 1, borderColor: COLORS.border, padding: 14, marginBottom: 30, gap: 12 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", backgroundColor: COLORS.warmWhite, borderRadius: 14, borderWidth: 1, borderColor: COLORS.border, padding: 14, marginBottom: 20, gap: 12 }}>
             <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: COLORS.coffeeBg, alignItems: "center", justifyContent: "center" }}>
               <CreditCard size={18} color={COLORS.brown} />
             </View>
@@ -176,26 +176,41 @@ export default function CartTab() {
               <Text style={{ fontSize: 12, fontWeight: "600", color: COLORS.brown }}>Change</Text>
             </Pressable>
           </View>
-
-          {/* ORDER NOW Button */}
-          <Pressable
-            onPress={() => router.push("/(stack)/order-tracking")}
-            style={{
-              backgroundColor: COLORS.brown,
-              paddingVertical: 16,
-              borderRadius: 14,
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "center",
-              gap: 8,
-            }}
-          >
-            <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>ORDER NOW</Text>
-            <Text style={{ fontSize: 15, color: COLORS.white }}>·</Text>
-            <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>${total.toFixed(2)}</Text>
-          </Pressable>
           </View>
         </ScrollView>
+
+        {/* ORDER NOW Button - Fixed at bottom */}
+        <View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            paddingHorizontal: 20,
+            paddingBottom: insets.bottom + 16,
+            paddingTop: 16,
+            backgroundColor: COLORS.cream,
+          }}
+        >
+          <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
+            <Pressable
+              onPress={() => router.push("/(stack)/order-tracking")}
+              style={{
+                backgroundColor: COLORS.brown,
+                paddingVertical: 16,
+                borderRadius: 14,
+                alignItems: "center",
+                flexDirection: "row",
+                justifyContent: "center",
+                gap: 8,
+              }}
+            >
+              <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>Continue</Text>
+              <Text style={{ fontSize: 15, color: COLORS.white }}>·</Text>
+              <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>${total.toFixed(2)}</Text>
+            </Pressable>
+          </View>
+        </View>
       </View>
     );
   }
@@ -297,7 +312,26 @@ export default function CartTab() {
                 <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>${total.toFixed(2)}</Text>
               </View>
             </View>
+          </>
+        )}
+        </View>
+      </ScrollView>
 
+      {/* Continue Button - Fixed at bottom */}
+      {cart.length > 0 && (
+        <View
+          style={{
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            paddingHorizontal: 20,
+            paddingBottom: insets.bottom + 16,
+            paddingTop: 16,
+            backgroundColor: COLORS.cream,
+          }}
+        >
+          <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
             <Pressable
               onPress={() => setView("summary")}
               style={{
@@ -314,10 +348,9 @@ export default function CartTab() {
               <Text style={{ fontSize: 15, color: COLORS.white }}>·</Text>
               <Text style={{ fontSize: 15, fontFamily: "BricolageGrotesque_700Bold", color: COLORS.white }}>${total.toFixed(2)}</Text>
             </Pressable>
-          </>
-        )}
+          </View>
         </View>
-      </ScrollView>
+      )}
     </View>
   );
 }
