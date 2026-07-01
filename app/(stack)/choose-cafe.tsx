@@ -294,7 +294,7 @@ export default function ChooseCafeScreen() {
           <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>Save</Text>
         </Pressable>
         <Pressable
-          onPress={() => router.push("/(stack)/delivery-method")}
+          onPress={() => router.push("/(stack)/payment")}
           style={{
             flex: 1,
             paddingVertical: 14,
