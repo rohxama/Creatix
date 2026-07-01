@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft, Check } from "lucide-react-native";
+import { useCart } from "@/context/CartContext";
 
 const COLORS = {
   cream: "#F5EDE3",
@@ -23,15 +24,46 @@ const COLORS = {
   sage: "#6b8f71",
 };
 
-const steps = [
-  { time: "09:37", label: "Brewing...", done: true },
-  { time: "09:40", label: "Picked For Delivery", done: true },
-  { time: "09:43", label: "Delivering...", done: true },
-  { time: "09:45", label: "Enjoying your coffee", done: false },
-];
+const IMAGES: Record<string, any> = {
+  coffee: require("../../assets/mockup.png"),
+  pastry: require("../../assets/pastery.png"),
+  boba: require("../../assets/boba.png"),
+  brunch: require("../../assets/brunch.png"),
+};
+
+function formatTime(date: Date) {
+  return date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: true });
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
 
 export default function OrderTrackingScreen() {
   const router = useRouter();
+  const { cart } = useCart();
+
+  const now = new Date();
+  const orderTime = new Date(now.getTime());
+  const brewDone = new Date(orderTime.getTime() + 3 * 60000);
+  const pickedUp = new Date(brewDone.getTime() + 3 * 60000);
+  const delivering = new Date(pickedUp.getTime() + 2 * 60000);
+  const ready = new Date(delivering.getTime() + 5 * 60000);
+
+  const steps = [
+    { time: formatTime(orderTime), label: "Order Placed", done: true },
+    { time: formatTime(brewDone), label: "Brewing...", done: true },
+    { time: formatTime(pickedUp), label: "Picked For Delivery", done: true },
+    { time: formatTime(delivering), label: "Delivering...", done: false },
+    { time: formatTime(ready), label: "Enjoying your coffee", done: false },
+  ];
+
+  const subtotal = cart.reduce((sum, item) => {
+    const price = parseFloat(item.price.replace("$", ""));
+    return sum + price * item.qty;
+  }, 0);
+
+  const orderNumber = String(Math.floor(100 + Math.random() * 900));
 
   return (
     <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
@@ -56,7 +88,7 @@ export default function OrderTrackingScreen() {
             flex: 1,
           }}
         >
-          Tracking: Order № 016
+          Tracking: Order № {orderNumber}
         </Text>
       </View>
 
@@ -74,41 +106,89 @@ export default function OrderTrackingScreen() {
         >
           My Order
         </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: COLORS.warmWhite,
-            borderRadius: 14,
-            borderWidth: 1,
-            borderColor: COLORS.border,
-            padding: 14,
-            marginBottom: 8,
-            gap: 12,
-          }}
-        >
+
+        {cart.length === 0 ? (
           <View
             style={{
-              width: 56,
-              height: 56,
-              borderRadius: 14,
-              backgroundColor: COLORS.coffeeBg,
+              flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
+              backgroundColor: COLORS.warmWhite,
+              borderRadius: 14,
+              borderWidth: 1,
+              borderColor: COLORS.border,
+              padding: 14,
+              marginBottom: 8,
+              gap: 12,
             }}
           >
-            <Image
-              source={require("../../assets/mockup.png")}
-              style={{ width: 38, height: 38 }}
-              resizeMode="contain"
-            />
+            <View
+              style={{
+                width: 56,
+                height: 56,
+                borderRadius: 14,
+                backgroundColor: COLORS.coffeeBg,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                source={require("../../assets/mockup.png")}
+                style={{ width: 38, height: 38 }}
+                resizeMode="contain"
+              />
+            </View>
+            <View style={{ flex: 1 }}>
+              <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>2x Brew Coffee</Text>
+              <Text style={{ fontSize: 11, color: COLORS.sage, marginTop: 2 }}>Free Delivery $0</Text>
+            </View>
+            <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>$7.98</Text>
           </View>
-          <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>2x Brew Coffee</Text>
-            <Text style={{ fontSize: 11, color: COLORS.sage, marginTop: 2 }}>Free Delivery $0 · Buy 2 get 1 free</Text>
-          </View>
-          <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>$7.98</Text>
-        </View>
+        ) : (
+          cart.map((item) => {
+            const image = IMAGES[item.category] || IMAGES.coffee;
+            const price = parseFloat(item.price.replace("$", ""));
+            return (
+              <View
+                key={item.id}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: COLORS.warmWhite,
+                  borderRadius: 14,
+                  borderWidth: 1,
+                  borderColor: COLORS.border,
+                  padding: 14,
+                  marginBottom: 8,
+                  gap: 12,
+                }}
+              >
+                <View
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: 14,
+                    backgroundColor: COLORS.coffeeBg,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image source={image} style={{ width: 38, height: 38 }} resizeMode="contain" />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 14, fontWeight: "700", color: COLORS.brown }}>
+                    {item.qty}x {item.name}
+                  </Text>
+                  <Text style={{ fontSize: 11, color: COLORS.neutral, marginTop: 2 }}>
+                    {item.category}
+                  </Text>
+                </View>
+                <Text style={{ fontSize: 16, fontWeight: "800", color: COLORS.brown }}>
+                  ${(price * item.qty).toFixed(2)}
+                </Text>
+              </View>
+            );
+          })
+        )}
 
         <View
           style={{
@@ -124,8 +204,10 @@ export default function OrderTrackingScreen() {
           }}
         >
           <View>
-            <Text style={{ fontSize: 13, fontWeight: "700", color: COLORS.brown }}>Order № 016</Text>
-            <Text style={{ fontSize: 12, color: COLORS.neutral, marginTop: 2 }}>Today, 09:37 AM</Text>
+            <Text style={{ fontSize: 13, fontWeight: "700", color: COLORS.brown }}>Order № {orderNumber}</Text>
+            <Text style={{ fontSize: 12, color: COLORS.neutral, marginTop: 2 }}>
+              {formatDate(now)}, {formatTime(orderTime)}
+            </Text>
           </View>
           <View
             style={{
