@@ -78,7 +78,7 @@ export default function ProductDetailsScreen() {
   }, []);
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
       {/* Header */}
       <View
@@ -148,9 +148,10 @@ export default function ProductDetailsScreen() {
       <View
         style={{
           paddingHorizontal: 20,
-          paddingBottom: Platform.OS === "ios" ? 36 : 24,
+          paddingBottom: insets.bottom + 16,
         }}
       >
+        <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
         <Pressable
           onPress={() => {
             addToCart({ id: params.id || "1", name, price, category });
@@ -194,6 +195,7 @@ export default function ProductDetailsScreen() {
             Need more &gt;
           </Text>
         </Pressable>
+        </View>
       </View>
       </View>
     </View>

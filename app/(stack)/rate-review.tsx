@@ -32,7 +32,7 @@ export default function RateReviewScreen() {
   const [feedback, setFeedback] = useState("");
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View style={{ maxWidth: 480, alignSelf: "center", width: "100%" }}>
       <View
         style={{

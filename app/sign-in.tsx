@@ -29,7 +29,7 @@ export default function SignInScreen() {
   const [password, setPassword] = useState("");
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View style={{ position: "absolute", top: Platform.OS === "ios" ? 10 : 18, right: 20, zIndex: 10 }}>
         <Pressable
           onPress={() => router.push("/(tabs)")}

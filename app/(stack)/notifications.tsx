@@ -34,7 +34,7 @@ export default function NotificationsScreen() {
   const router = useRouter();
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{

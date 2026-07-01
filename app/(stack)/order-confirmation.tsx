@@ -26,7 +26,7 @@ export default function OrderConfirmationScreen() {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#ffffff",
+        backgroundColor: COLORS.cream,
         alignItems: "center",
         justifyContent: "center",
         paddingHorizontal: 32,

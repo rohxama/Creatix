@@ -27,13 +27,16 @@ export default function WelcomeScreen() {
   const headingSize = SCREEN_WIDTH < 350 ? 52 : 70;
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.white }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View
         style={{
           flex: 1,
           alignItems: "center",
           justifyContent: "center",
           paddingHorizontal: 20,
+          maxWidth: 480,
+          alignSelf: "center",
+          width: "100%",
         }}
       >
 
@@ -68,29 +71,26 @@ export default function WelcomeScreen() {
           resizeMode="contain"
         />
 
-        <View style={{ alignItems: "center" }}>
-          <View style={{ maxWidth: 480, width: "100%", paddingHorizontal: 20, paddingVertical: 16 }}>
-            <Pressable
-              onPress={() => router.push("/sign-in")}
-              style={{
-                backgroundColor: COLORS.brown,
-                paddingVertical: 16,
-                borderRadius: 14,
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontFamily: "BricolageGrotesque_700Bold",
-                  color: COLORS.white,
-                }}
-              >
-                Get Started
-              </Text>
-            </Pressable>
-          </View>
-        </View>
+        <Pressable
+          onPress={() => router.push("/sign-in")}
+          style={{
+            width: "100%",
+            backgroundColor: COLORS.brown,
+            paddingVertical: 16,
+            borderRadius: 14,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "BricolageGrotesque_700Bold",
+              color: COLORS.white,
+            }}
+          >
+            Get Started
+          </Text>
+        </Pressable>
       </View>
     </View>
   );

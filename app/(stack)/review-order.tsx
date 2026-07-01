@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   ScrollView,
-  Platform,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
@@ -30,7 +29,7 @@ export default function ReviewOrderScreen() {
   const router = useRouter();
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 20 }}
@@ -137,9 +136,12 @@ export default function ReviewOrderScreen() {
 
       <View
         style={{
+          maxWidth: 480,
+          alignSelf: "center",
+          width: "100%",
           paddingHorizontal: 20,
-          paddingVertical: 16,
-          paddingBottom: Platform.OS === "ios" ? 36 : 24,
+          paddingBottom: insets.bottom + 16,
+          paddingTop: 16,
           backgroundColor: COLORS.cream,
           flexDirection: "row",
           gap: 12,

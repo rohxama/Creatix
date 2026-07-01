@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   ScrollView,
-  Platform,
   Image,
 } from "react-native";
 import { useRouter } from "expo-router";
@@ -30,7 +29,7 @@ export default function OrderSummaryScreen() {
   const [orderType, setOrderType] = useState<"delivery" | "pickup">("delivery");
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
+    <View style={{ flex: 1, backgroundColor: COLORS.cream }}>
       <View
         style={{
           paddingTop: insets.top + 16,
@@ -251,8 +250,11 @@ export default function OrderSummaryScreen() {
 
       <View
         style={{
+          maxWidth: 480,
+          alignSelf: "center",
+          width: "100%",
           paddingHorizontal: 20,
-          paddingBottom: Platform.OS === "ios" ? 36 : 24,
+          paddingBottom: insets.bottom + 16,
           paddingTop: 12,
           backgroundColor: COLORS.cream,
         }}
